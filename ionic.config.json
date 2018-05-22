@@ -1,0 +1,8 @@
+{
+  "name": "trocco_bar",
+  "app_id": "6bf4160a",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
