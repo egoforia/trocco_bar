@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      <span ion-text>Nearby</span>
+    </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content class="lightest-bg">
+
+<!-- <div padding *ngIf="from !== 'home'">
+  <ion-segment [(ngModel)]="proptype">
+    <ion-segment-button value="">
+      All
+    </ion-segment-button>
+    <ion-segment-button value="sale">
+      For Sale
+    </ion-segment-button>
+    <ion-segment-button value="rent">
+      For Rent
+    </ion-segment-button>
+  </ion-segment>
+</div> -->
+
+  <div style="width:100%;height:100%;" id="nearby-map"></div>
+
+</ion-content>

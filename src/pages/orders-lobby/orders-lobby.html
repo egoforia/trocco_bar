@@ -1,0 +1,66 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Orders Lobby</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-grid no-padding fixed>
+    <!-- em aberto -->
+		<ion-row no-padding>
+			<ion-col>
+
+        <ion-list no-margin>
+          <ion-item *ngFor="let open of open$ | async">
+            <ion-card>
+              <ion-card-content>
+                {{ open.key }}
+                {{ open.payload.val().status }}
+                <button ion-button (click)="setPreparing(open.key)">Preparar</button>
+                <div *ngIf="(open.user$ | async) as user">
+                  {{ user.displayName }}
+                </div>
+
+                <ion-list no-margin>
+                  <ion-item *ngFor="let item of open.dishes">
+                    <div *ngIf="(item.dish | async) as dish; else loadingDish;">
+                      <ion-avatar item-start>
+                        <img src="{{dish.picture}}"/>
+                      </ion-avatar>
+                      <h2 ion-text color="dark" class="fw700">
+                        {{ dish.name }} x <span>{{ item.quantity }}</span>
+                      </h2>
+                    </div>
+                    <ng-template #loadingDish><ion-spinner></ion-spinner>Carregando Item...</ng-template>
+                  </ion-item>
+                </ion-list>
+
+              </ion-card-content>
+            </ion-card>
+          </ion-item>
+        </ion-list>
+
+        <!-- <ng-template #noOrders>
+          Carregando pedidos...
+        </ng-template> -->
+
+      </ion-col>
+    </ion-row>
+    <!-- em preparo -->
+		<ion-row no-padding>
+			<ion-col>
+
+      </ion-col>
+    </ion-row>
+    <!-- pronto para retirar -->
+		<ion-row no-padding>
+			<ion-col>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

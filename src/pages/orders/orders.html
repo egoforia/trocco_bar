@@ -1,0 +1,92 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>
+        	<span ion-text>Pedido</span>
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content class="lightest-bg">
+
+	<ion-grid no-padding fixed *ngIf="(order$ | async) as order; else loading;">
+		<ion-row no-padding *ngIf="order">
+			<ion-col>
+
+				<!-- <ion-card *ngIf="order.status" class="primary-bg" margin-top>
+					<ion-card-content>
+						<p text-center class="text-white">{{order.status}}</p>
+					</ion-card-content>
+				</ion-card> -->
+
+        <button ion-button color="primary" icon-left tappable (click)="openRestaurantDetail()" *ngIf="order.dishes.length == 0">
+          <ion-icon name="beer"></ion-icon>
+          Adicione algo em seu pedido
+        </button>
+
+        <div *ngIf="order.status == 'finalized'">
+          <p>Seu pedido foi finalizdo</p>
+          <button ion-button color="primary" icon-left tappable (click)="openRestaurantDetail()">
+            Faça um novo pedido
+          </button>
+        </div>
+
+        <div *ngIf="order.status == 'canceled'">
+          <p>Seu pedido foi cancelado pelo motivo:</p>
+          <p>[Inserir motivo aqui]</p>
+          <button ion-button color="primary" icon-left tappable (click)="openRestaurantDetail()">
+            Faça um novo pedido
+          </button>
+        </div>
+
+				<ion-card *ngFor="let item of order.dishes">
+					<ion-card-content no-padding *ngIf="(item.dish | async) as dish">
+						<ion-thumbnail item-left>
+							<img src="{{dish.picture}}"/>
+						</ion-thumbnail>
+						<h2 ion-text color="dark" class="fw700">{{dish.name}}</h2>
+						<p ion-text color="primary">Quantity: <span class="fw700">{{item.quantity}}</span></p>
+						<ion-badge color="primary">{{ dish.price * item.quantity | currency }}</ion-badge>
+					</ion-card-content>
+
+				</ion-card>
+
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+  <ng-template #loading><ion-spinner></ion-spinner>Loading...</ng-template>
+
+</ion-content>
+
+<ion-footer class="no-padding">
+  <div *ngIf="(order$ | async) as order">
+    <div *ngIf="order.status; else addToCart;">
+      <ion-card class="primary-bg">
+        <ion-card-content>
+          <p text-center class="text-white">{{ order.status }}</p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+    <ng-template #addToCart>
+      <button ion-button full large color="dark" no-margin icon-right (click)="sendOrder()">
+    		Realizar Pedido
+    		<ion-icon name="card"></ion-icon>
+    	</button>
+    </ng-template>
+  </div>
+
+  <ion-grid no-padding fixed>
+		<ion-row no-padding>
+			<button ion-button icon-left block color="primary" (click)="openRestaurantDetail()" class="col col-6">
+        	<ion-icon name="compass" class="text-18x"></ion-icon>
+        	<span ion-text class="text-12x">Cardápio</span>
+			</button>
+			<button ion-button icon-left block color="primary" (click)="openCheck()" class="col col-6">
+          <ion-icon name="albums" class="text-18x"></ion-icon>
+          <span ion-text class="text-12x">Comanda</span>
+			</button>
+		</ion-row>
+	</ion-grid>
+</ion-footer>
