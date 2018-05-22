@@ -43,8 +43,6 @@ export class foodIonicApp {
 
     helpMenuItems: Array<MenuItem>;
 
-    user: firebase.User;
-
     constructor(
       public platform: Platform,
       public firebase: Firebase,
@@ -89,36 +87,32 @@ export class foodIonicApp {
 
     initializeApp() {
       this.platform.ready().then(() => {
-        this.statusBar.overlaysWebView(false);
-
         const authSubscription = this.afAuth.authState.subscribe(user => {
           console.log('authState subscribed user: ', JSON.stringify(user));
 
-          // logged user
-          if (user) {
-            this.restaurantService.recoveryActive(() => {
-              const guestSubs = this.restaurantService.getGuestSubscriber();
-
-              if (guestSubs) {
-                this.rootPage = 'page-restaurant-detail';
-              }
-              else {
-                this.rootPage = 'page-home';
-              }
-            },
-            (e: Error) => {
-              console.error(e);
-              this.logout();
-            });
-          }
-          // no user
-          else {
-            this.rootPage = 'page-walkthrough';
-          }
+          // // logged user
+          // if (user) {
+          //   this.restaurantService.recoveryActive(() => {
+          //     const guestSubs = this.restaurantService.getGuestSubscriber();
+          //
+          //     if (guestSubs) {
+          //       this.rootPage = 'page-restaurant-detail';
+          //     }
+          //     else {
+          //       this.rootPage = 'page-home';
+          //     }
+          //   },
+          //   (e: Error) => {
+          //     console.error(e);
+          //     this.logout();
+          //   });
+          // }
+          // // no user
+          // else {
+          //   this.rootPage = 'page-walkthrough';
+          // }
 
           authSubscription.unsubscribe();
-
-          this.splashScreen.hide();
         });
       });
 

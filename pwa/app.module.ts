@@ -9,9 +9,11 @@ import { foodIonicApp } from './app.component';
 
 import { PipesModule } from '../pipes/pipes.module';
 
+import { Firebase } from '@ionic-native/firebase';
+
 import { AngularFireModule } from 'angularfire2';
 // for AngularFireDatabase
-import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
 // for AngularFireAuth
 import { AngularFireAuthModule } from 'angularfire2/auth';
 

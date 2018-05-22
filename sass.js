@@ -59,7 +59,7 @@ module.exports = {
    * patterns, then the file will be excluded.
    */
   excludeFiles: [
-    /\.(wp).(scss)$/i,
+    /\.(wp|ios).(scss)$/i,
     /(chip|cordova)/i,
   ],
 

@@ -3,20 +3,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
+// import {APP_BASE_HREF, LocationStrategy, PathLocationStrategy} from '@angular/common';
 
 import { foodIonicApp } from './app.component';
 
 import { PipesModule } from '../pipes/pipes.module';
-
-import {MessageService} from "../providers/message-service-mock";
-import {RestaurantService} from "../providers/restaurant-service-mock";
-import {DishService} from "../providers/dish-service-mock";
-import {CategoryService} from "../providers/category-service-mock";
-import {CartService} from "../providers/cart-service-mock";
-
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { Keyboard } from '@ionic-native/keyboard';
 
 import { Firebase } from '@ionic-native/firebase';
 
@@ -25,16 +16,12 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
 // for AngularFireAuth
 import { AngularFireAuthModule } from 'angularfire2/auth';
-import { AngularFireAuth } from 'angularfire2/auth';
 
 import { RestaurantFireService } from "../providers/restaurant-fire-service";
 import { CartFireService } from "../providers/cart-fire-service";
 import { OrdersFireService } from "../providers/orders-fire-service";
 import { UsersFireService } from '../providers/users-fire-service';
-
-import { Facebook } from '@ionic-native/facebook';
 import { OrdersLobbyFireService } from '../providers/orders-lobby-fire-service';
-
 
 export const firebaseConfig = {
   apiKey: "AIzaSyCpeYNLer4m1nEG_ZT6N50dnoZfbeIpj4Y",
@@ -53,10 +40,9 @@ export const firebaseConfig = {
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(foodIonicApp, {
-    	preloadModules: true,
-      scrollPadding: false,
-      scrollAssist: true,
-      autoFocusAssist: false
+			preloadModules: true,
+			iconMode: 'md',
+			mode: 'md'
     }),
     IonicStorageModule.forRoot({
       name: '__foodIonicDB',
@@ -72,15 +58,6 @@ export const firebaseConfig = {
     foodIonicApp
   ],
   providers: [
-    StatusBar,
-    SplashScreen,
-    Keyboard,
-    RestaurantService,
-    DishService,
-    CategoryService,
-    MessageService,
-    CartService,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
     Firebase,
     AngularFireDatabase,
     RestaurantFireService,
@@ -88,7 +65,9 @@ export const firebaseConfig = {
     OrdersFireService,
     UsersFireService,
     OrdersLobbyFireService,
-    Facebook
+    // { provide: LocationStrategy, useClass: PathLocationStrategy },
+    // { provide: APP_BASE_HREF, useValue : '/' },
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
 export class AppModule {}
