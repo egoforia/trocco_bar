@@ -6,7 +6,6 @@ import { map, take, debounceTime } from 'rxjs/operators';
 
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
-import { Facebook } from '@ionic-native/facebook';
 import { UsersFireService } from '../../providers/users-fire-service';
 
 @IonicPage({
@@ -31,7 +30,6 @@ export class AuthPage implements OnInit {
 		public menu:					MenuController,
 		public toastCtrl: 		ToastController,
 		public afAuth: 				AngularFireAuth,
-		private facebook: 		Facebook,
     private platform: 		Platform,
 		private usersService: UsersFireService
 	) {
@@ -74,44 +72,6 @@ export class AuthPage implements OnInit {
 	goToHome() {
 		this.nav.setRoot('page-home');
 	}
-
-	loginFacebook() {
-		if (this.platform.is('cordova')) {
-      return this.facebook.login(['email', 'public_profile']).then(res => {
-        const facebookCredential = firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken);
-        return this.afAuth.auth
-					.signInWithCredential(facebookCredential)
-					.then(res => {
-						this.usersService.saveUser({
-
-						}).then(user => {
-							this.goToHome();
-						});
-					})
-					.catch(error => {
-						console.error('Erro no login pelo facebook');
-					});
-      })
-    } else {
-      return this.afAuth.auth
-        .signInWithPopup(new firebase.auth.FacebookAuthProvider())
-        .then(res => {
-					debugger;
-					this.usersService.saveUser({
-						uid: 					res.user.uid,
-						displayName: 	res.user.displayName,
-						email: 				res.user.email,
-						photoUrl: 		res.user.photoURL
-					}).then(user => {
-						this.goToHome();
-					});
-				})
-				.catch(error => {
-					debugger;
-					this.toast(error.message);
-				});
-    }
-  }
 
   // login and go to home page
   login() {

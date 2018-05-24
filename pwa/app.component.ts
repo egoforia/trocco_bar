@@ -90,27 +90,14 @@ export class foodIonicApp {
         const authSubscription = this.afAuth.authState.subscribe(user => {
           console.log('authState subscribed user: ', JSON.stringify(user));
 
-          // // logged user
-          // if (user) {
-          //   this.restaurantService.recoveryActive(() => {
-          //     const guestSubs = this.restaurantService.getGuestSubscriber();
-          //
-          //     if (guestSubs) {
-          //       this.rootPage = 'page-restaurant-detail';
-          //     }
-          //     else {
-          //       this.rootPage = 'page-home';
-          //     }
-          //   },
-          //   (e: Error) => {
-          //     console.error(e);
-          //     this.logout();
-          //   });
-          // }
-          // // no user
-          // else {
-          //   this.rootPage = 'page-walkthrough';
-          // }
+          // logged user
+          if (user) {
+            this.rootPage = 'page-home';
+          }
+          // no user
+          else {
+            this.rootPage = 'page-auth';
+          }
 
           authSubscription.unsubscribe();
         });
