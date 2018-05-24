@@ -25,6 +25,29 @@ export class RestaurantFireService {
     return this.afDB.object(`estabelecimentos/${id}`).valueChanges();
 	}
 
+  setActiveByEmail(email, then, error = null) {
+    this.afDB.list(`estabelecimentos_users`, ref => {
+      return ref.orderByChild('email').equalTo(email).limitToFirst(1);
+    })
+    .valueChanges()
+    .subscribe((user: any) => {
+      if (user && user[0].restaurant_id) {
+        this.afDB.object(`estabelecimentos/${user[0].restaurant_id}`).valueChanges().subscribe((restaurant: any) => {
+          console.log('restaurant: ', restaurant)
+          if (restaurant) {
+            this.active = restaurant;
+
+            if (then instanceof Function)
+              then();
+          }
+        });
+      } else {
+        if (error instanceof Function)
+          error(new Error(`Couldn't find user with email ${email}`));
+      }
+    });
+  }
+
   setActive(restaurant) {
     this.active = restaurant;
     this.addGuest(restaurant);

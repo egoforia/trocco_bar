@@ -3,16 +3,18 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 
 import { UsersFireService } from './users-fire-service';
+import { RestaurantFireService } from './restaurant-fire-service';
 
 @Injectable()
 export class OrdersLobbyFireService {
 
-  restaurant_id: number = 1;
+  restaurant_id: number;
 
   openOrdersRef: AngularFireList<{}>;
   today: string = '';
 
-  constructor(public afDB: AngularFireDatabase, public usersService: UsersFireService) {
+  constructor(public afDB: AngularFireDatabase, public usersService: UsersFireService, public restaurantService: RestaurantFireService) {
+    this.restaurant_id = this.restaurantService.getActive().id;
     this.today = new Date().toISOString().slice(0, 10);
 
     this.openOrdersRef = this.afDB.list(`orders/${this.restaurant_id}/${this.today}`);
@@ -35,11 +37,9 @@ export class OrdersLobbyFireService {
 
           console.log('order dishes: ', order.dishes);
 
-
           // load user
           order.user$ = this.usersService.getUser$(order.payload.val().user_id);
           order.key;
-
         });
 
         return orders;

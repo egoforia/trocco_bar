@@ -92,7 +92,15 @@ export class foodIonicApp {
 
           // logged user
           if (user) {
-            this.rootPage = 'page-home';
+            this.restaurantService.setActiveByEmail(user.email,
+              () => {
+                this.rootPage = 'page-orders-lobby';
+              },
+              (e: Error) => {
+                console.error(e);
+              }
+            );
+
           }
           // no user
           else {

@@ -7,6 +7,7 @@ import { map, take, debounceTime } from 'rxjs/operators';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { UsersFireService } from '../../providers/users-fire-service';
+import { RestaurantFireService } from '../../providers/restaurant-fire-service';
 
 @IonicPage({
 	name: 'page-auth',
@@ -31,7 +32,8 @@ export class AuthPage implements OnInit {
 		public toastCtrl: 		ToastController,
 		public afAuth: 				AngularFireAuth,
     private platform: 		Platform,
-		private usersService: UsersFireService
+		private usersService: UsersFireService,
+		private restaurantService: RestaurantFireService
 	) {
 		this.menu.swipeEnable(false);
 		this.menu.enable(false);
@@ -75,11 +77,19 @@ export class AuthPage implements OnInit {
 
   // login and go to home page
   login() {
-    const form = this.onLoginForm;
+		const form = this.onLoginForm;
 		if (form.valid) {
 			this.afAuth.auth.signInAndRetrieveDataWithEmailAndPassword(form.value.email, form.value.password)
 			.then(res => {
-				this.goToHome();
+				this.restaurantService.setActiveByEmail(res.user.email,
+					() => {
+						this.goToHome();
+					},
+					(e: Error) => {
+						console.error(e);
+					}
+				)
+				// this.goToHome();
 			})
 			.catch(error => {
 				// show toast with error message
