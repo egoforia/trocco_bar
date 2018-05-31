@@ -71,8 +71,8 @@ export class AuthPage implements OnInit {
   //   this.nav.setRoot(RegisterPage);
   // }
 
-	goToHome() {
-		this.nav.setRoot('page-home');
+	goToOrdersLobby() {
+		this.nav.setRoot('page-orders-lobby');
 	}
 
   // login and go to home page
@@ -83,7 +83,7 @@ export class AuthPage implements OnInit {
 			.then(res => {
 				this.restaurantService.setActiveByEmail(res.user.email,
 					() => {
-						this.goToHome();
+						this.goToOrdersLobby();
 					},
 					(e: Error) => {
 						console.error(e);

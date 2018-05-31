@@ -98,6 +98,7 @@ export class foodIonicApp {
               },
               (e: Error) => {
                 console.error(e);
+                this.logout();
               }
             );
 

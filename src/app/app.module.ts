@@ -23,7 +23,7 @@ import { OrdersFireService } from "../providers/orders-fire-service";
 import { UsersFireService } from '../providers/users-fire-service';
 import { OrdersLobbyFireService } from '../providers/orders-lobby-fire-service';
 
-import { ComponentsModule } from '../components/components.module';
+// import { ComponentsModule } from '../components/components.module';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyCpeYNLer4m1nEG_ZT6N50dnoZfbeIpj4Y",
@@ -37,7 +37,7 @@ export const firebaseConfig = {
 @NgModule({
   declarations: [
     foodIonicApp,
-    ComponentsModule
+    // ComponentsModule
   ],
   imports: [
     BrowserModule,

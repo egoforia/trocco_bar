@@ -31,7 +31,7 @@ export class RestaurantFireService {
     })
     .valueChanges()
     .subscribe((user: any) => {
-      if (user && user[0].restaurant_id) {
+      try {
         this.afDB.object(`estabelecimentos/${user[0].restaurant_id}`).valueChanges().subscribe((restaurant: any) => {
           console.log('restaurant: ', restaurant)
           if (restaurant) {
@@ -41,7 +41,7 @@ export class RestaurantFireService {
               then();
           }
         });
-      } else {
+      } catch(e) {
         if (error instanceof Function)
           error(new Error(`Couldn't find user with email ${email}`));
       }
