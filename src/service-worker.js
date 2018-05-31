@@ -2,7 +2,7 @@
 importScripts('./build/sw-toolbox.js');
 
 self.toolbox.options.cache = {
-  name: 'foodionic-cache'
+  name: 'trocco_bar-cache'
 };
 
 // pre-cache our key assets
