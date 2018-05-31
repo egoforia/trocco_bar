@@ -114,7 +114,7 @@ export class AuthPage implements OnInit {
 					});
 
 					res.user.sendEmailVerification();
-					this.goToHome();
+					this.goToOrdersLobby();
 				});
 			})
 			.catch(error => {
