@@ -1,0 +1,23 @@
+<ion-card>
+  <ion-card-content>
+    <button ion-button (click)="setPreparing(order.key)">Preparar</button>
+    <div *ngIf="(open.user$ | async) as user">
+      {{ user.displayName }}
+    </div>
+
+    <ion-list no-margin>
+      <ion-item *ngFor="let item of order.dishes">
+        <div *ngIf="(item.dish | async) as dish; else loadingDish;">
+          <ion-avatar item-start>
+            <img src="{{dish.picture}}"/>
+          </ion-avatar>
+          <h2 ion-text color="dark" class="fw700">
+            {{ dish.name }} x <span>{{ item.quantity }}</span>
+          </h2>
+        </div>
+        <ng-template #loadingDish><ion-spinner></ion-spinner>Carregando Item...</ng-template>
+      </ion-item>
+    </ion-list>
+
+  </ion-card-content>
+</ion-card>
