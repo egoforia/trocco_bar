@@ -1,31 +1,51 @@
 import { Injectable } from '@angular/core';
 
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+import { AngularFireAuth, AUTH_PROVIDERS } from 'angularfire2/auth';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class UsersFireService {
+    constructor(private afDB: AngularFireDatabase, private afAuth: AngularFireAuth) {
 
-  constructor(public afDB: AngularFireDatabase) {
+    }
 
-  }
+    getUserRef(user_id: string) {
+        return this.afDB.object(`users/${user_id}`);
+    }
 
-  getUserRef(user_id: string) {
-    return this.afDB.object(`users/${user_id}`);
-  }
+    getUser$(user_id: string) {
+        return this.getUserRef(user_id).valueChanges();
+    }
 
-  getUser$(user_id: string) {
-    return this.getUserRef(user_id).valueChanges();
-  }
+    saveUser(user: any) {
+        // clean up empty values
+        Object.keys(user).forEach(key => {
+        if(!user[key] && user[key] !== false){
+            delete user[key];
+        }
+        });
 
-  saveUser(user: any) {
-    // clean up empty values
-    Object.keys(user).forEach(key => {
-     if(!user[key] && user[key] !== false){
-        delete user[key];
-      }
-    });
+        return this.getUserRef(user.uid).update(user);
+    }
 
-    return this.getUserRef(user.uid).update(user);
-  }
+    getCurrentUser$() {
+        const observable = Observable.create((obs) => {
+            this.afAuth.authState.subscribe(user => {
+                const email = user.email;
 
+                this.afDB.list('estabelecimentos_users').valueChanges().subscribe(e_users => {
+                    const e_user = e_users.filter((user) => user.email === email)[0];
+
+                    this.afDB.list('estabelecimentos').valueChanges().subscribe(restaurants => {
+                        var result = restaurants.filter((restaurant) => restaurant.id === e_user.restaurant_id)[0];
+                        obs.next(result)
+                        obs.complete();
+                    });
+                });
+            });
+        });
+
+        return observable;
+    }
 }

@@ -8,6 +8,7 @@ import { RestaurantFireService } from '../providers/restaurant-fire-service'
 import { Observable } from 'rxjs/Observable';
 
 import { AngularFireAuth } from 'angularfire2/auth';
+import { UsersFireService } from '../providers/users-fire-service';
 
 export interface MenuItem {
     title: string;

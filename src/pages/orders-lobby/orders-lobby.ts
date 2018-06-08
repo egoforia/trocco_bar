@@ -19,6 +19,8 @@ import { OrdersLobbyFireService } from '../../providers/orders-lobby-fire-servic
 export class OrdersLobbyPage {
 
   open$: Observable<any[]>;
+  menuopts: String = 'waiting';
+  orders: Array<any>;
 
   constructor(
     public navCtrl: NavController,
@@ -30,12 +32,25 @@ export class OrdersLobbyPage {
   ) {
     this.open$ = this.ordersLobbyService.getOpenOrders$()
     // this.open$.subscribe(orders => {
-    //   debugger;
+    //   console.log(orders)
     // });
+
+    this.usersService.getCurrentUser$().subscribe((restaurant: any) => {
+      this.restaurant = restaurant;
+      this.ordersLobbyService.getGuests().subscribe(guests => {
+        this.guests = Object.keys(guests).map((key) => {
+          return { user_id: key, status: guests[key]["status"] }
+        });
+      });
+    })
   }
 
   ionViewDidLoad() {
     // console.log('ionViewDidLoad OrdersLobbyPage');
+  }
+
+  getGuestUserInformation(user_id) {
+
   }
 
   setPreparing(order_id) {

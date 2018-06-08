@@ -1,66 +1,43 @@
 <ion-header>
-
   <ion-navbar>
     <ion-title>Orders Lobby</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
 <ion-content padding>
-  <ion-grid no-padding fixed>
-    <!-- em aberto -->
+	<ion-grid no-padding fixed>
 		<ion-row no-padding>
 			<ion-col>
+				<ion-segment [(ngModel)]="menuopts" padding-horizontal>
+					<ion-segment-button value="waiting">
+						Aguardando
+					</ion-segment-button>
+					<ion-segment-button value="active">
+						Ativas
+					</ion-segment-button>
+					<ion-segment-button value="done">
+						Encerradas
+					</ion-segment-button>
+				</ion-segment>
 
-        <ion-list no-margin>
-          <ion-item *ngFor="let open of open$ | async">
-            <ion-card>
-              <ion-card-content>
-                {{ open.key }}
-                {{ open.payload.val().status }}
-                <button ion-button (click)="setPreparing(open.key)">Preparar</button>
-                <div *ngIf="(open.user$ | async) as user">
-                  {{ user.displayName }}
-                </div>
+				<div [ngSwitch]="menuopts" padding>
+					<div *ngSwitchCase="'waiting'">
+						<ion-list>
+							<ion-item no-padding *ngFor="let guest of guests" tapplable>
+								<h2 ion-text color="dark" class="fw500">{{guest.user_id}}</h2>
+							</ion-item>
+						</ion-list>
+					</div>
 
-                <ion-list no-margin>
-                  <ion-item *ngFor="let item of open.dishes">
-                    <div *ngIf="(item.dish | async) as dish; else loadingDish;">
-                      <ion-avatar item-start>
-                        <img src="{{dish.picture}}"/>
-                      </ion-avatar>
-                      <h2 ion-text color="dark" class="fw700">
-                        {{ dish.name }} x <span>{{ item.quantity }}</span>
-                      </h2>
-                    </div>
-                    <ng-template #loadingDish><ion-spinner></ion-spinner>Carregando Item...</ng-template>
-                  </ion-item>
-                </ion-list>
+					<div *ngSwitchCase="'active'" class="tab-reviews">
+					</div>
 
-              </ion-card-content>
-            </ion-card>
-          </ion-item>
-        </ion-list>
-
-        <!-- <ng-template #noOrders>
-          Carregando pedidos...
-        </ng-template> -->
-
-      </ion-col>
-    </ion-row>
-    <!-- em preparo -->
-		<ion-row no-padding>
-			<ion-col>
-
-      </ion-col>
-    </ion-row>
-    <!-- pronto para retirar -->
-		<ion-row no-padding>
-			<ion-col>
-
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+					<div *ngSwitchCase="'done'">
+					</div>
+				</div>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
 
 </ion-content>
