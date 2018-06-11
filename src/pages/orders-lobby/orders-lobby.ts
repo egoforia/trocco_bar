@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 
 import { Observable } from 'rxjs/Observable';
 
@@ -32,13 +32,9 @@ export class OrdersLobbyPage {
     public afDB: AngularFireDatabase,
     public restaurantService: RestaurantFireService,
     public usersService: UsersFireService,
-    public ordersLobbyService: OrdersLobbyFireService
+    public ordersLobbyService: OrdersLobbyFireService,
+    public modalCtrl: ModalController
   ) {
-    this.open$ = this.ordersLobbyService.getOpenOrders$()
-    // this.open$.subscribe(orders => {
-    //   console.log(orders)
-    // });
-
     this.usersService.getCurrentUser$().subscribe((restaurant: any) => {
       this.restaurant = restaurant;
       this.getGuests();
@@ -63,8 +59,7 @@ export class OrdersLobbyPage {
           }
         });
 
-        this.guests = this.guests.sort((a, b) => a.created_at > b.created_at);
-        this.guests.map((entry) => this.getGuestUserInformation(entry));
+        this.sortListAndGetUserInformation(this.guests);
       } else {
         this.guests = [];
       }
