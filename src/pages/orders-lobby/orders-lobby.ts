@@ -23,8 +23,8 @@ export class OrdersLobbyPage {
   orders: Array<any>;
   restaurant: Observable<any>;
   guests: Observable<any[]> = [];
-  activeOrders: Observable<any[]>;
-  finishedOrders: Observable<any[]>;
+  activeOrders: Observable<any[]> = [];
+  finishedOrders: Observable<any[]> = [];
 
   constructor(
     public navCtrl: NavController,
@@ -48,7 +48,7 @@ export class OrdersLobbyPage {
   }
 
   getGuests() {
-    this.ordersLobbyService.getGuests().subscribe((guests: any) => {
+    this.ordersLobbyService.getGuests$().subscribe((guests: any) => {
       if (guests) {
         this.guests = Object.keys(guests).map((key) => {
           return {
@@ -60,6 +60,7 @@ export class OrdersLobbyPage {
         });
 
         this.sortListAndGetUserInformation(this.guests);
+        this.guests = this.guests.filter((item) => item.status == "waiting");
       } else {
         this.guests = [];
       }
@@ -69,14 +70,14 @@ export class OrdersLobbyPage {
   getActiveOrders() {
     this.ordersLobbyService.getActiveOrders$().subscribe((orders: Array<any>) => {
       this.activeOrders = orders;
-      this.sortListAndGetUserInformation(this.activeOrders);
+      this.sortListAndGetUserInformation(this.activeOrders, 'custom_id', '>');
     });
   }
 
   getFinishedOrders() {
     this.ordersLobbyService.getFinishedOrders$().subscribe((orders: Array<any>) => {
       this.finishedOrders = orders;
-      this.sortListAndGetUserInformation(this.finishedOrders);
+      this.sortListAndGetUserInformation(this.finishedOrders, 'custom_id', '>');
     });
   }
 
@@ -87,8 +88,13 @@ export class OrdersLobbyPage {
     });
   }
 
-  sortListAndGetUserInformation(list) {
-    list = list.sort((a, b) => a.created_at > b.created_at);
+  sortListAndGetUserInformation(list, sort_by = 'created_at', operator = '<') {
+    if(operator == '<') {
+      list = list.sort((a, b) => a[sort_by] < b[sort_by]);
+    } else {
+      list = list.sort((a, b) => a[sort_by] > b[sort_by]);
+    }
+
     list.map((entry) => this.getGuestUserInformation(entry));
   }
 
@@ -96,4 +102,18 @@ export class OrdersLobbyPage {
     this.ordersLobbyService.setPreparing(order_id);
   }
 
+  openGuestModal(guest) {
+    const modal = this.modalCtrl.create('page-order-modal', {type: 'guest', order: guest})
+    modal.present();
+  }
+
+  openActiveOrderModal(order) {
+    const modal = this.modalCtrl.create('page-order-modal', { type: 'active', order: order })
+    modal.present();
+  }
+
+  openFinishedOrderModal(order) {
+    const modal = this.modalCtrl.create('page-order-modal', { type: 'finished', order: order })
+    modal.present();
+  }
 }

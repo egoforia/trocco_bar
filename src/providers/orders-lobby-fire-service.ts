@@ -27,12 +27,12 @@ export class OrdersLobbyFireService {
     return this.afDB.object(`orders/${this.restaurant.id}/${this.today}/${order_id}`);
   }
 
-  getGuests() {
+  getGuests$() {
     return this.afDB.object(`guests/${this.today}/${this.restaurant.id}`).valueChanges();
   }
 
   getActiveOrders$() {
-    return this.getOrderByStatus$('open');
+    return this.getOrderByStatus$('preparing');
   }
 
   getFinishedOrders$() {
@@ -67,6 +67,12 @@ export class OrdersLobbyFireService {
 
   getDish$(dish_id) {
     return this.afDB.object(`estabelecimentos/${this.restaurant.id}/dishes/${dish_id}`).valueChanges();
+  }
+
+  setGuestToOpen(guest, custom_id) {
+    this.afDB.object(`guests/${this.today}/${this.restaurant.id}/${guest.user_id}`).update({custom_id: custom_id, status: "preparing"}).then(() => {
+      return this.afDB.list(`orders/${this.restaurant.id}/${this.today}`).push({ user_id: guest.user_id, custom_id: custom_id, status: "preparing"})
+    });
   }
 
   setPreparing(order_id) {

@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-buttons start>
+      <button ion-button round (click)="closeModal()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      <span ion-text>
+        <div [ngSwitch]="type">
+          <div *ngSwitchCase="'guest'">
+            Guest
+          </div>
+
+          <div *ngSwitchCase="'active'">
+            Active
+          </div>
+
+          <div *ngSwitchCase="'finished'">
+            Finished
+          </div>
+        </div>
+      </span>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div [ngSwitch]="type">
+    <div *ngSwitchCase="'guest'">
+      <input type="text" [(ngModel)]="custom_id">
+      <button ion-button (click)="openOrder()">
+        Abrir comanda
+      </button>
+    </div>
+  
+    <div *ngSwitchCase="'active'">
+      <ion-list no-margin>
+        <ion-item *ngFor="let dish of order.dishes">
+          <ion-avatar item-start>
+            <img src="{{dish.picture}}" />
+          </ion-avatar>
+          <h2 ion-text color="dark" class="fw700">
+            {{ dish.name }} x
+            <span>{{ dish.quantity }}</span>
+          </h2>
+        </ion-item>
+      </ion-list>
+    </div>
+  
+    <div *ngSwitchCase="'finished'">
+      <ion-list no-margin>
+        <ion-item *ngFor="let dish of order.dishes">
+          <ion-avatar item-start>
+            <img src="{{dish.picture}}" />
+          </ion-avatar>
+          <h2 ion-text color="dark" class="fw700">
+            {{ dish.name }} x
+            <span>{{ dish.quantity }}</span>
+          </h2>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+</ion-content>

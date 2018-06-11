@@ -24,8 +24,8 @@
 				<div [ngSwitch]="menuopts" padding>
 					<div *ngSwitchCase="'waiting'">
 						<ion-list>
-							<ion-item no-padding *ngFor="let guest of guests" tapplable>
-								<h2 ion-text color="dark" class="fw500">{{guest.displayName}}</h2>
+							<ion-item no-padding *ngFor="let order of guests" tapplable (click)="openGuestModal(order)">
+								<h2 ion-text color="dark" class="fw500">{{order.displayName}}</h2>
 							</ion-item>
 
 							<ion-item no-padding *ngIf="guests.length == 0">
@@ -34,10 +34,10 @@
 						</ion-list>
 					</div>
 
-					<div *ngSwitchCase="'active'" class="tab-reviews">
+					<div *ngSwitchCase="'active'">
 						<ion-list>
-							<ion-item no-padding *ngFor="let order of activeOrders" tapplable>
-								<h2 ion-text color="dark" class="fw500">{{order.displayName}}</h2>
+							<ion-item no-padding *ngFor="let order of activeOrders" tapplable (click)="openActiveOrderModal(order)">
+								<h2 ion-text color="dark" class="fw500">{{order.custom_id}}</h2>
 							</ion-item>
 
 							<ion-item no-padding *ngIf="activeOrders.length == 0">
@@ -48,8 +48,8 @@
 
 					<div *ngSwitchCase="'done'">
 						<ion-list>
-							<ion-item no-padding *ngFor="let order of finishedOrders" tapplable>
-								<h2 ion-text color="dark" class="fw500">{{order.displayName}}</h2>
+							<ion-item no-padding *ngFor="let order of finishedOrders" tapplable (click)="openFinishedOrderModal(order)">
+								<h2 ion-text color="dark" class="fw500">{{order.custom_id}}</h2>
 							</ion-item>
 
 							<ion-item no-padding *ngIf="finishedOrders.length == 0">
