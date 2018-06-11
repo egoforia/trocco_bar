@@ -25,15 +25,37 @@
 					<div *ngSwitchCase="'waiting'">
 						<ion-list>
 							<ion-item no-padding *ngFor="let guest of guests" tapplable>
-								<h2 ion-text color="dark" class="fw500">{{guest.user_id}}</h2>
+								<h2 ion-text color="dark" class="fw500">{{guest.displayName}}</h2>
+							</ion-item>
+
+							<ion-item no-padding *ngIf="guests.length == 0">
+								<h2 ion-text color="dark" class="fw500">Nenhum item</h2>
 							</ion-item>
 						</ion-list>
 					</div>
 
 					<div *ngSwitchCase="'active'" class="tab-reviews">
+						<ion-list>
+							<ion-item no-padding *ngFor="let order of activeOrders" tapplable>
+								<h2 ion-text color="dark" class="fw500">{{order.displayName}}</h2>
+							</ion-item>
+
+							<ion-item no-padding *ngIf="activeOrders.length == 0">
+								<h2 ion-text color="dark" class="fw500">Nenhum item</h2>
+							</ion-item>
+						</ion-list>
 					</div>
 
 					<div *ngSwitchCase="'done'">
+						<ion-list>
+							<ion-item no-padding *ngFor="let order of finishedOrders" tapplable>
+								<h2 ion-text color="dark" class="fw500">{{order.displayName}}</h2>
+							</ion-item>
+
+							<ion-item no-padding *ngIf="finishedOrders.length == 0">
+								<h2 ion-text color="dark" class="fw500">Nenhum item</h2>
+							</ion-item>
+						</ion-list>
 					</div>
 				</div>
 			</ion-col>

@@ -31,6 +31,18 @@ export class OrdersLobbyFireService {
     return this.afDB.object(`guests/${this.today}/${this.restaurant.id}`).valueChanges();
   }
 
+  getActiveOrders$() {
+    return this.getOrderByStatus$('open');
+  }
+
+  getFinishedOrders$() {
+    return this.getOrderByStatus$('ok');
+  }
+
+  getOrderByStatus$(status) {
+    return this.afDB.list(`orders/${this.restaurant.id}/${this.today}`, ref => ref.orderByChild('status').equalTo(status)).valueChanges();
+  }
+
   getOpenOrders$() {
     // return this.openOrdersRef.snapshotChanges()
     //   .map(orders => {
