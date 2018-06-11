@@ -65,6 +65,8 @@ export class OrdersLobbyPage {
 
         this.guests = this.guests.sort((a, b) => a.created_at > b.created_at);
         this.guests.map((entry) => this.getGuestUserInformation(entry));
+      } else {
+        this.guests = [];
       }
     });
   }
