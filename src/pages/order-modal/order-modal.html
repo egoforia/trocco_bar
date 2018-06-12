@@ -32,9 +32,15 @@
       <button ion-button [disabled]="!custom_id" (click)="openOrder()">
         Abrir comanda
       </button>
-      <button ion-button (click)="cancelGuest()">
-        Cancelar comanda
-      </button>
+
+      <ion-item>
+        <ion-avatar item-start>
+          <img src="{{order.photoUrl}}" />
+        </ion-avatar>
+        <h2 ion-text color="dark" class="fw700">
+          {{ order.displayName }} - {{order.rg}}
+        </h2>
+      </ion-item>
     </div>
   
     <div *ngSwitchCase="'active'">
@@ -47,6 +53,19 @@
             {{ dish.name }} x
             <span>{{ dish.quantity }}</span>
           </h2>
+
+          <button ion-button (click)="changeOrderStatusTo('canceled')">
+            Rejeitar pedido
+          </button>
+          <button ion-button (click)="changeOrderStatusTo('preparing')">
+            Preparar pedido
+          </button>
+          <button ion-button (click)="changeOrderStatusTo('ready')">
+            Pronto para retirar
+          </button>
+          <button ion-button (click)="changeOrderStatusTo('finalized')">
+            Pedido entregue
+          </button>
         </ion-item>
       </ion-list>
     </div>

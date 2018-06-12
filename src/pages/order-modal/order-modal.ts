@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { OrdersLobbyFireService } from '../../providers/orders-lobby-fire-service'
-
+import { Push, PushObject, PushOptions } from "@ionic-native/push";
 
 @IonicPage({
   name: 'page-order-modal',
@@ -16,7 +16,13 @@ export class OrderModalPage {
   public order: any;
   public custom_id: String = '';
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private orderLobbyService: OrdersLobbyFireService) {
+  constructor(
+      public navCtrl: NavController,
+      public navParams: NavParams,
+      private orderLobbyService: OrdersLobbyFireService,
+      public alertCtrl: AlertController,
+      public push: Push
+  ) {
     this.type = this.navParams.get('type');
     this.order = this.navParams.get('order');
     this.getDishes();
@@ -31,12 +37,6 @@ export class OrderModalPage {
     this.closeModal();
   }
 
-  cancelGuest() {
-    this.orderLobbyService.cancelGuest(this.order);
-    // should we remove this guest?
-    this.closeModal();
-  }
-
   getDishes() {
     if(this.order.dishes) {
       this.order.dishes.forEach((item, index) => {
@@ -46,5 +46,10 @@ export class OrderModalPage {
         })
       });
     }
+  }
+
+  changeOrderStatusTo(status = 'preparing') {
+    this.orderLobbyService.getOrderRef(this.order.id).update({ status: status });
+    this.closeModal();
   }
 }

@@ -54,7 +54,6 @@ export class OrdersLobbyPage {
           return {
             user_id: key,
             status: guests[key]["status"],
-            client_name: guests[key]["client_name"],
             created_at: new Date(guests[key]["created_at"])
           }
         });
@@ -68,16 +67,42 @@ export class OrdersLobbyPage {
   }
 
   getActiveOrders() {
-    this.ordersLobbyService.getActiveOrders$().subscribe((orders: Array<any>) => {
-      this.activeOrders = orders;
-      this.sortListAndGetUserInformation(this.activeOrders, 'custom_id', '>');
+    this.ordersLobbyService.getOrderByStatus$().subscribe((orders: any) => {
+      if(orders) {
+        this.activeOrders = Object.keys(orders).map((key) => {
+          return {
+            id: key,
+            status: orders[key]["status"],
+            user_id: orders[key]["user_id"],
+            dishes: orders[key]["dishes"],
+            custom_id: orders[key]["custom_id"]
+          }
+        });
+        this.activeOrders = this.activeOrders.filter((item) => item.status == "preparing" || item.status == "ready");
+        this.sortListAndGetUserInformation(this.activeOrders, 'custom_id', '>');
+      } else {
+        this.activeOrders = []
+      }
     });
   }
 
   getFinishedOrders() {
-    this.ordersLobbyService.getFinishedOrders$().subscribe((orders: Array<any>) => {
-      this.finishedOrders = orders;
-      this.sortListAndGetUserInformation(this.finishedOrders, 'custom_id', '>');
+    this.ordersLobbyService.getOrderByStatus$().subscribe((orders: any) => {
+      if (orders) {
+        this.finishedOrders = Object.keys(orders).map((key) => {
+          return {
+            id: key,
+            status: orders[key]["status"],
+            user_id: orders[key]["user_id"],
+            dishes: orders[key]["dishes"],
+            custom_id: orders[key]["custom_id"]
+          }
+        });
+        this.finishedOrders = this.finishedOrders.filter((item) => item.status == "ok");
+        this.sortListAndGetUserInformation(this.finishedOrders, 'custom_id', '>');
+      } else {
+        this.finishedOrders = []
+      }
     });
   }
 
