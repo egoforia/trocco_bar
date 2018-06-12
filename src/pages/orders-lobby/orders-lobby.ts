@@ -22,9 +22,9 @@ export class OrdersLobbyPage {
   menuopts: String = 'waiting';
   orders: Array<any>;
   restaurant: Observable<any>;
-  guests: Observable<any[]> = [];
-  activeOrders: Observable<any[]> = [];
-  finishedOrders: Observable<any[]> = [];
+  guests: Array<any>;
+  activeOrders: Array<any>;
+  finishedOrders: Array<any>;
 
   constructor(
     public navCtrl: NavController,
@@ -35,6 +35,10 @@ export class OrdersLobbyPage {
     public ordersLobbyService: OrdersLobbyFireService,
     public modalCtrl: ModalController
   ) {
+    this.guests = [];
+    this.activeOrders = [];
+    this.finishedOrders = [];
+
     this.usersService.getCurrentUser$().subscribe((restaurant: any) => {
       this.restaurant = restaurant;
       this.getGuests();
@@ -50,7 +54,7 @@ export class OrdersLobbyPage {
   getGuests() {
     this.ordersLobbyService.getGuests$().subscribe((guests: any) => {
       if (guests) {
-        this.guests = Object.keys(guests).map((key) => {
+        this.guests = Object.keys(guests).map((key: any) => {
           return {
             user_id: key,
             status: guests[key]["status"],
@@ -59,7 +63,7 @@ export class OrdersLobbyPage {
         });
 
         this.sortListAndGetUserInformation(this.guests);
-        this.guests = this.guests.filter((item) => item.status == "waiting");
+        this.guests = this.guests.filter((item: any) => item.status == "waiting");
       } else {
         this.guests = [];
       }
@@ -69,7 +73,7 @@ export class OrdersLobbyPage {
   getActiveOrders() {
     this.ordersLobbyService.getOrderByStatus$().subscribe((orders: any) => {
       if(orders) {
-        this.activeOrders = Object.keys(orders).map((key) => {
+        this.activeOrders = Object.keys(orders).map((key: any) => {
           return {
             id: key,
             status: orders[key]["status"],
@@ -78,7 +82,7 @@ export class OrdersLobbyPage {
             custom_id: orders[key]["custom_id"]
           }
         });
-        this.activeOrders = this.activeOrders.filter((item) => item.status == "preparing" || item.status == "ready");
+        this.activeOrders = this.activeOrders.filter((item: any) => item.status == "preparing" || item.status == "ready");
         this.sortListAndGetUserInformation(this.activeOrders, 'custom_id', '>');
       } else {
         this.activeOrders = []
@@ -89,7 +93,7 @@ export class OrdersLobbyPage {
   getFinishedOrders() {
     this.ordersLobbyService.getOrderByStatus$().subscribe((orders: any) => {
       if (orders) {
-        this.finishedOrders = Object.keys(orders).map((key) => {
+        this.finishedOrders = Object.keys(orders).map((key: any) => {
           return {
             id: key,
             status: orders[key]["status"],
@@ -98,7 +102,7 @@ export class OrdersLobbyPage {
             custom_id: orders[key]["custom_id"]
           }
         });
-        this.finishedOrders = this.finishedOrders.filter((item) => item.status == "ok");
+        this.finishedOrders = this.finishedOrders.filter((item: any) => item.status == "ok");
         this.sortListAndGetUserInformation(this.finishedOrders, 'custom_id', '>');
       } else {
         this.finishedOrders = []
@@ -120,7 +124,7 @@ export class OrdersLobbyPage {
       list = list.sort((a, b) => a[sort_by] > b[sort_by]);
     }
 
-    list.map((entry) => this.getGuestUserInformation(entry));
+    list.map((entry: any) => this.getGuestUserInformation(entry));
   }
 
   setPreparing(order_id) {

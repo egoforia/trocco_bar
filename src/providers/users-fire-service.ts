@@ -31,14 +31,14 @@ export class UsersFireService {
 
     getCurrentUser$() {
         const observable = Observable.create((obs) => {
-            this.afAuth.authState.subscribe(user => {
+            this.afAuth.authState.subscribe((user: any) => {
                 const email = user.email;
 
-                this.afDB.list('estabelecimentos_users').valueChanges().subscribe(e_users => {
+                this.afDB.list('estabelecimentos_users').valueChanges().subscribe((e_users: any) => {
                     const e_user = e_users.filter((user) => user.email === email)[0];
 
-                    this.afDB.list('estabelecimentos').valueChanges().subscribe(restaurants => {
-                        var result = restaurants.filter((restaurant) => restaurant.id === e_user.restaurant_id)[0];
+                    this.afDB.list('estabelecimentos').valueChanges().subscribe((restaurants: Array<any>) => {
+                        var result = restaurants.filter((restaurant: any) => restaurant.id === e_user.restaurant_id)[0];
                         obs.next(result)
                         obs.complete();
                     });

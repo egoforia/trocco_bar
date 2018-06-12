@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { OrdersLobbyFireService } from '../../providers/orders-lobby-fire-service'
-import { Push, PushObject, PushOptions } from "@ionic-native/push";
 
 @IonicPage({
   name: 'page-order-modal',
@@ -20,8 +19,7 @@ export class OrderModalPage {
       public navCtrl: NavController,
       public navParams: NavParams,
       private orderLobbyService: OrdersLobbyFireService,
-      public alertCtrl: AlertController,
-      public push: Push
+      public alertCtrl: AlertController
   ) {
     this.type = this.navParams.get('type');
     this.order = this.navParams.get('order');
