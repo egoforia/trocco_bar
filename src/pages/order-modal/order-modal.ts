@@ -31,6 +31,12 @@ export class OrderModalPage {
     this.closeModal();
   }
 
+  cancelGuest() {
+    this.orderLobbyService.cancelGuest(this.order);
+    // should we remove this guest?
+    this.closeModal();
+  }
+
   getDishes() {
     if(this.order.dishes) {
       this.order.dishes.forEach((item, index) => {

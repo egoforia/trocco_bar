@@ -75,6 +75,10 @@ export class OrdersLobbyFireService {
     });
   }
 
+  cancelGuest(guest) {
+    return this.afDB.object(`guests/${this.today}/${this.restaurant.id}/${guest.user_id}`).update({status: "canceled" });
+  }
+
   setPreparing(order_id) {
     return this.getOrderRef(order_id).update({ status: 'preparing' });
   }
