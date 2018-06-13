@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { OrdersLobbyFireService } from '../../providers/orders-lobby-fire-service'
 
 @IonicPage({
@@ -18,8 +18,7 @@ export class OrderModalPage {
   constructor(
       public navCtrl: NavController,
       public navParams: NavParams,
-      private orderLobbyService: OrdersLobbyFireService,
-      public alertCtrl: AlertController
+      private orderLobbyService: OrdersLobbyFireService
   ) {
     this.type = this.navParams.get('type');
     this.order = this.navParams.get('order');
@@ -31,7 +30,7 @@ export class OrderModalPage {
   }
 
   openOrder() {
-    this.orderLobbyService.setGuestToOpen(this.order, this.custom_id);
+    // this.orderLobbyService.setGuestToOpen(this.order, this.custom_id);
     this.closeModal();
   }
 
