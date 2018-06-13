@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, AlertController } from 'ionic-angular';
-import { Push, PushObject, PushOptions } from '@ionic-native/push';
-
 import { Firebase } from '@ionic-native/firebase';
+import { FCM } from '@ionic-native/fcm';
+import { Push, PushObject, PushOptions } from "@ionic-native/push";
 
 import { AngularFireDatabase } from 'angularfire2/database';
 import { RestaurantFireService } from '../providers/restaurant-fire-service'
@@ -51,7 +51,9 @@ export class foodIonicApp {
       public afDB: AngularFireDatabase,
       public afAuth: AngularFireAuth,
       public alertCtrl: AlertController,
-      public push: Push
+      private restaurantService: RestaurantFireService,
+      private fcm: FCM,
+      private push: Push
     ) {
       this.initializeApp();
 
@@ -113,14 +115,28 @@ export class foodIonicApp {
 
           authSubscription.unsubscribe();
         });
+
+        if(this.platform.is('mobile')) {
+          this.pushsetup();
+        }
       });
 
 	    if (!this.platform.is('mobile')) {
 	      this.tabsPlacement = 'top';
 	      this.tabsLayout = 'icon-left';
       }
-      
-      this.pushsetup();
+    }
+
+    pushsetup() {
+      FCMPlugin.onNotification((data) => {
+        console.log(data)
+        this.alertCtrl.create({
+          title: data.title,
+          message: data.message
+        }).present();
+      }, (error) => {
+        console.log(error);
+      });
     }
 
     initializeFirebase() {
@@ -139,20 +155,4 @@ export class foodIonicApp {
       this.afAuth.auth.signOut();
       this.nav.setRoot('page-auth');
     }
-
-  pushsetup() {
-    const options: PushOptions = {};
-    const pushObject: PushObject = this.push.init(options);
-
-    pushObject.on("registration").subscribe((registration: any) => { });
-    pushObject.on("notification").subscribe((notification: any) => {
-      if (notification.additionalData.foreground) {
-        const alert = this.alertCtrl.create({
-          title: notification.label,
-          message: notification.message
-        });
-        alert.present();
-      }
-    });
-  }
 }

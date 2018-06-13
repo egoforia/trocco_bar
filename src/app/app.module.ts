@@ -3,13 +3,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
+import { Firebase } from '@ionic-native/firebase';
+import { FCM } from '@ionic-native/fcm';
+import { Push } from "@ionic-native/push";
+
 // import {APP_BASE_HREF, LocationStrategy, PathLocationStrategy} from '@angular/common';
 
 import { foodIonicApp } from './app.component';
 
 import { PipesModule } from '../pipes/pipes.module';
-
-import { Firebase } from '@ionic-native/firebase';
 
 import { AngularFireModule } from 'angularfire2';
 // for AngularFireDatabase
@@ -22,8 +24,6 @@ import { CartFireService } from "../providers/cart-fire-service";
 import { OrdersFireService } from "../providers/orders-fire-service";
 import { UsersFireService } from '../providers/users-fire-service';
 import { OrdersLobbyFireService } from '../providers/orders-lobby-fire-service';
-
-import { Push } from '@ionic-native/push';
 
 // import { ComponentsModule } from '../components/components.module';
 
@@ -70,6 +70,7 @@ export const firebaseConfig = {
     OrdersFireService,
     UsersFireService,
     OrdersLobbyFireService,
+    FCM,
     Push,
     // { provide: LocationStrategy, useClass: PathLocationStrategy },
     // { provide: APP_BASE_HREF, useValue : '/' },
