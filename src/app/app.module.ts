@@ -23,6 +23,8 @@ import { OrdersFireService } from "../providers/orders-fire-service";
 import { UsersFireService } from '../providers/users-fire-service';
 import { OrdersLobbyFireService } from '../providers/orders-lobby-fire-service';
 
+import { Push } from '@ionic-native/push';
+
 // import { ComponentsModule } from '../components/components.module';
 
 export const firebaseConfig = {
@@ -68,6 +70,7 @@ export const firebaseConfig = {
     OrdersFireService,
     UsersFireService,
     OrdersLobbyFireService,
+    Push,
     // { provide: LocationStrategy, useClass: PathLocationStrategy },
     // { provide: APP_BASE_HREF, useValue : '/' },
     {provide: ErrorHandler, useClass: IonicErrorHandler}

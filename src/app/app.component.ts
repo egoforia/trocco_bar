@@ -1,5 +1,6 @@
-import {Component, ViewChild} from '@angular/core';
-import {Nav, Platform} from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { Nav, Platform, AlertController } from 'ionic-angular';
+import { Push, PushObject, PushOptions } from '@ionic-native/push';
 
 import { Firebase } from '@ionic-native/firebase';
 
@@ -49,7 +50,8 @@ export class foodIonicApp {
       public firebase: Firebase,
       public afDB: AngularFireDatabase,
       public afAuth: AngularFireAuth,
-      private restaurantService: RestaurantFireService
+      public alertCtrl: AlertController,
+      public push: Push
     ) {
       this.initializeApp();
 
@@ -116,7 +118,9 @@ export class foodIonicApp {
 	    if (!this.platform.is('mobile')) {
 	      this.tabsPlacement = 'top';
 	      this.tabsLayout = 'icon-left';
-	    }
+      }
+      
+      this.pushsetup();
     }
 
     initializeFirebase() {
@@ -135,4 +139,20 @@ export class foodIonicApp {
       this.afAuth.auth.signOut();
       this.nav.setRoot('page-auth');
     }
+
+  pushsetup() {
+    const options: PushOptions = {};
+    const pushObject: PushObject = this.push.init(options);
+
+    pushObject.on("registration").subscribe((registration: any) => { });
+    pushObject.on("notification").subscribe((notification: any) => {
+      if (notification.additionalData.foreground) {
+        const alert = this.alertCtrl.create({
+          title: notification.label,
+          message: notification.message
+        });
+        alert.present();
+      }
+    });
+  }
 }
