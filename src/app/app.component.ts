@@ -92,6 +92,13 @@ export class foodIonicApp {
 
     initializeApp() {
       this.platform.ready().then(() => {
+        if(this.platform.is('android') || this.platform.is('ios')) {
+          // Should update user with a field with device_token_id
+          this.fcm.getToken().then(token => {
+            console.log(token)
+          });
+          this.pushsetup();
+        }
         const authSubscription = this.afAuth.authState.subscribe(user => {
           console.log('authState subscribed user: ', JSON.stringify(user));
 
@@ -115,11 +122,8 @@ export class foodIonicApp {
 
           authSubscription.unsubscribe();
         });
-
-        if(this.platform.is('mobile')) {
-          this.pushsetup();
-        }
       });
+      
 
 	    if (!this.platform.is('mobile')) {
 	      this.tabsPlacement = 'top';
@@ -128,15 +132,17 @@ export class foodIonicApp {
     }
 
     pushsetup() {
-      FCMPlugin.onNotification((data) => {
-        console.log(data)
-        this.alertCtrl.create({
-          title: data.title,
-          message: data.message
-        }).present();
-      }, (error) => {
-        console.log(error);
-      });
+      setTimeout(() => {
+        FCMPlugin.onNotification((data) => {
+          console.log(data)
+          this.alertCtrl.create({
+            title: data.title,
+            message: data.message
+          }).present();
+        }, (error) => {
+          console.log(error);
+        });
+      }, 5000);
     }
 
     initializeFirebase() {

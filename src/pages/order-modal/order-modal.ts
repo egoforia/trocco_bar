@@ -30,7 +30,7 @@ export class OrderModalPage {
   }
 
   openOrder() {
-    // this.orderLobbyService.setGuestToOpen(this.order, this.custom_id);
+    this.orderLobbyService.setGuestToOpen(this.order, this.custom_id);
     this.closeModal();
   }
 
