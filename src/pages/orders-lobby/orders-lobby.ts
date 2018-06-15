@@ -68,11 +68,15 @@ export class OrdersLobbyPage {
             id: key,
             status: orders[key]["status"],
             user_id: orders[key]["user_id"],
-            dishes: orders[key]["dishes"],
+            dishes: orders[key]["dishes"] || [],
             custom_id: orders[key]["custom_id"]
           }
         });
-        this.activeOrders = this.activeOrders.filter((item: any) => item.status == "preparing" || item.status == "ready");
+        this.activeOrders = this.activeOrders.filter((item: any) => {
+          if(item.status == "preparing" || item.status == "ready" || item.status == "open") {
+            return item;
+          }
+        });
         this.sortListAndGetUserInformation(this.activeOrders, 'custom_id', '>');
       } else {
         this.activeOrders = []
@@ -88,8 +92,8 @@ export class OrdersLobbyPage {
             id: key,
             status: orders[key]["status"],
             user_id: orders[key]["user_id"],
-            dishes: orders[key]["dishes"],
-            custom_id: orders[key]["custom_id"]
+            dishes: orders[key]["dishes"] || [],
+
           }
         });
         this.finishedOrders = this.finishedOrders.filter((item: any) => item.status == "ok");
@@ -121,18 +125,8 @@ export class OrdersLobbyPage {
     this.ordersLobbyService.setPreparing(order_id);
   }
 
-  openGuestModal(guest) {
-    const modal = this.modalCtrl.create('page-order-modal', {type: 'guest', order: guest})
-    modal.present();
-  }
-
-  openActiveOrderModal(order) {
-    const modal = this.modalCtrl.create('page-order-modal', { type: 'active', order: order })
-    modal.present();
-  }
-
-  openFinishedOrderModal(order) {
-    const modal = this.modalCtrl.create('page-order-modal', { type: 'finished', order: order })
+  openOrderDetailModal(order, status) {
+    const modal = this.modalCtrl.create('page-order-modal', { type: status, order: order })
     modal.present();
   }
 }

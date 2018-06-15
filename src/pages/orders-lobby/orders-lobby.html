@@ -21,7 +21,7 @@
 						<h2 ion-text color="dark" class="fw700">
 							{{ order.displayName }} - {{order.rg}}
 						</h2>
-						<button ion-button (click)="openGuestModal(order)">
+						<button ion-button (click)="openOrderDetailModal(order, 'guest')">
 							Abrir comanda
 						</button>
 					</ion-item>
@@ -41,7 +41,7 @@
 						<h2 ion-text color="dark" class="fw700">
 							{{ order.displayName }} - {{order.custom_id}}
 						</h2>
-						<button ion-button (click)="openActiveOrderModal(order)">
+						<button ion-button (click)="openOrderDetailModal(order, 'active')">
 							Ver comanda
 						</button>
 					</ion-item>
@@ -61,7 +61,7 @@
 						<h2 ion-text color="dark" class="fw700">
 							{{ order.displayName }} - {{order.custom_id}}
 						</h2>
-						<button ion-button (click)="openFinishedOrderModal(order)">
+						<button ion-button (click)="openOrderDetailModal(order, 'finished')">
 							Ver comanda
 						</button>
 					</ion-item>

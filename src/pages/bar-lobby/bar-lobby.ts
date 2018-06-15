@@ -51,7 +51,7 @@ export class BarLobbyPage {
             id: key,
             status: orders[key]["status"],
             user_id: orders[key]["user_id"],
-            dishes: orders[key]["dishes"],
+            dishes: orders[key]["dishes"] || [],
             custom_id: orders[key]["custom_id"]
           }
         });
@@ -71,7 +71,7 @@ export class BarLobbyPage {
             id: key,
             status: orders[key]["status"],
             user_id: orders[key]["user_id"],
-            dishes: orders[key]["dishes"],
+            dishes: orders[key]["dishes"] || [],
             custom_id: orders[key]["custom_id"]
           }
         });
@@ -91,7 +91,7 @@ export class BarLobbyPage {
             id: key,
             status: orders[key]["status"],
             user_id: orders[key]["user_id"],
-            dishes: orders[key]["dishes"],
+            dishes: orders[key]["dishes"] || [],
             custom_id: orders[key]["custom_id"]
           }
         });
@@ -118,5 +118,11 @@ export class BarLobbyPage {
       entry = Object.assign(entry, user);
       sub.unsubscribe();
     });
+  }
+
+  openOrderDetailModal(order, status) {
+    console.log(order, status)
+    // const modal = this.modalCtrl.create('page-order-modal', { type: status, order: order })
+    // modal.present();
   }
 }
