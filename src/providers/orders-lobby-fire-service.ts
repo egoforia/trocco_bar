@@ -58,7 +58,12 @@ export class OrdersLobbyFireService {
 
   setGuestToOpen(guest, custom_id) {
     this.afDB.object(`guests/${this.today}/${this.restaurant.id}/${guest.user_id}`).update({custom_id: custom_id, status: "open"}).then(() => {
-      return this.afDB.list(`orders/${this.restaurant.id}/${this.today}`).push({ user_id: guest.user_id, custom_id: custom_id, status: "open"})
+      return this.afDB.list(`orders/${this.restaurant.id}/${this.today}`).push({
+        user_id: guest.user_id,
+        custom_id: custom_id,
+        status: "open",
+        created_at: + new Date()
+      });
     });
   }
 

@@ -52,11 +52,12 @@ export class BarLobbyPage {
             status: orders[key]["status"],
             user_id: orders[key]["user_id"],
             dishes: orders[key]["dishes"] || [],
-            custom_id: orders[key]["custom_id"]
+            custom_id: orders[key]["custom_id"],
+            created_at: new Date(orders[key]["created_at"])
           }
         });
         this.openOrders = this.openOrders.filter((item: any) => item.status == "open");
-        this.sortListAndGetUserInformation(this.openOrders, 'custom_id', '>');
+        this.sortListAndGetUserInformation(this.openOrders, 'created_at', '>');
       } else {
         this.openOrders = [];
       }
@@ -72,11 +73,12 @@ export class BarLobbyPage {
             status: orders[key]["status"],
             user_id: orders[key]["user_id"],
             dishes: orders[key]["dishes"] || [],
-            custom_id: orders[key]["custom_id"]
+            custom_id: orders[key]["custom_id"],
+            created_at: new Date(orders[key]["created_at"])
           }
         });
         this.preparingOrders = this.preparingOrders.filter((item: any) => item.status == "preparing");
-        this.sortListAndGetUserInformation(this.preparingOrders, 'custom_id', '>');
+        this.sortListAndGetUserInformation(this.preparingOrders, 'created_at', '>');
       } else {
         this.preparingOrders = [];
       }
@@ -92,11 +94,12 @@ export class BarLobbyPage {
             status: orders[key]["status"],
             user_id: orders[key]["user_id"],
             dishes: orders[key]["dishes"] || [],
-            custom_id: orders[key]["custom_id"]
+            custom_id: orders[key]["custom_id"],
+            created_at: new Date(orders[key]["created_at"])
           }
         });
         this.readyOrders = this.readyOrders.filter((item: any) => item.status == "ready");
-        this.sortListAndGetUserInformation(this.readyOrders, 'custom_id', '>');
+        this.sortListAndGetUserInformation(this.readyOrders, 'created_at', '>');
       } else {
         this.readyOrders = [];
       }
