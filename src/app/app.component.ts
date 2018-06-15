@@ -2,14 +2,12 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, AlertController } from 'ionic-angular';
 import { Firebase } from '@ionic-native/firebase';
 import { FCM } from '@ionic-native/fcm';
-import { Push, PushObject, PushOptions } from "@ionic-native/push";
 
 import { AngularFireDatabase } from 'angularfire2/database';
 import { RestaurantFireService } from '../providers/restaurant-fire-service'
-import { Observable } from 'rxjs/Observable';
 
 import { AngularFireAuth } from 'angularfire2/auth';
-import { UsersFireService } from '../providers/users-fire-service';
+declare var FCMPlugin: any;
 
 export interface MenuItem {
     title: string;
@@ -52,8 +50,7 @@ export class foodIonicApp {
       public afAuth: AngularFireAuth,
       public alertCtrl: AlertController,
       private restaurantService: RestaurantFireService,
-      private fcm: FCM,
-      private push: Push
+      private fcm: FCM
     ) {
       this.initializeApp();
 
@@ -92,14 +89,14 @@ export class foodIonicApp {
 
     initializeApp() {
       this.platform.ready().then(() => {
-        if(this.platform.is('android') || this.platform.is('ios')) {
+        if(this.platform.is('cordova')) {
           // Should update user with a field with device_token_id
-          this.fcm.getToken().then(token => {
-            console.log(token)
+          this.fcm.getToken().then((token: String) => {
+            console.log(`Device Token Id: ${token}`)
           });
           this.pushsetup();
         }
-        const authSubscription = this.afAuth.authState.subscribe(user => {
+        const authSubscription = this.afAuth.authState.subscribe((user: any) => {
           console.log('authState subscribed user: ', JSON.stringify(user));
 
           // logged user
@@ -133,7 +130,7 @@ export class foodIonicApp {
 
     pushsetup() {
       setTimeout(() => {
-        FCMPlugin.onNotification((data) => {
+        FCMPlugin.onNotification((data: any) => {
           console.log(data)
           this.alertCtrl.create({
             title: data.title,
