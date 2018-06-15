@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
-
 import { Observable } from 'rxjs/Observable';
-
 import { AngularFireDatabase } from 'angularfire2/database';
 import { RestaurantFireService } from '../../providers/restaurant-fire-service';
 import { UsersFireService } from '../../providers/users-fire-service';
@@ -31,9 +29,9 @@ export class OrdersLobbyPage {
     public ordersLobbyService: OrdersLobbyFireService,
     public modalCtrl: ModalController
   ) {
-    this.guests = [];
-    this.activeOrders = [];
-    this.finishedOrders = [];
+    this.guests          = [];
+    this.activeOrders    = [];
+    this.finishedOrders  = [];
 
     this.usersService.getCurrentUser$().subscribe((restaurant: any) => {
       this.restaurant = restaurant;
@@ -41,10 +39,6 @@ export class OrdersLobbyPage {
       this.getActiveOrders();
       this.getFinishedOrders();
     });
-  }
-
-  ionViewDidLoad() {
-    // console.log('ionViewDidLoad OrdersLobbyPage');
   }
 
   getGuests() {
@@ -67,7 +61,7 @@ export class OrdersLobbyPage {
   }
 
   getActiveOrders() {
-    this.ordersLobbyService.getOrderByStatus$().subscribe((orders: any) => {
+    this.ordersLobbyService.getOrders$().subscribe((orders: any) => {
       if(orders) {
         this.activeOrders = Object.keys(orders).map((key: any) => {
           return {
@@ -87,7 +81,7 @@ export class OrdersLobbyPage {
   }
 
   getFinishedOrders() {
-    this.ordersLobbyService.getOrderByStatus$().subscribe((orders: any) => {
+    this.ordersLobbyService.getOrders$().subscribe((orders: any) => {
       if (orders) {
         this.finishedOrders = Object.keys(orders).map((key: any) => {
           return {

@@ -1,17 +1,12 @@
 import { Injectable } from '@angular/core';
-
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
-
 import { UsersFireService } from './users-fire-service';
 import { RestaurantFireService } from './restaurant-fire-service';
-import { AngularFireAuth, AUTH_PROVIDERS } from 'angularfire2/auth';
-import { createOfflineCompileUrlResolver } from '@angular/compiler';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Injectable()
 export class OrdersLobbyFireService {
-
   restaurant: any = {};
-
   openOrdersRef: AngularFireList<{}>;
   today: string = '';
   guests: Array<any>;
@@ -31,7 +26,7 @@ export class OrdersLobbyFireService {
     return this.afDB.object(`guests/${this.today}/${this.restaurant.id}`).valueChanges();
   }
 
-  getOrderByStatus$() {
+  getOrders$() {
     return this.afDB.object(`orders/${this.restaurant.id}/${this.today}`).valueChanges();
   }
 
@@ -62,8 +57,8 @@ export class OrdersLobbyFireService {
   }
 
   setGuestToOpen(guest, custom_id) {
-    this.afDB.object(`guests/${this.today}/${this.restaurant.id}/${guest.user_id}`).update({custom_id: custom_id, status: "preparing"}).then(() => {
-      return this.afDB.list(`orders/${this.restaurant.id}/${this.today}`).push({ user_id: guest.user_id, custom_id: custom_id, status: "preparing"})
+    this.afDB.object(`guests/${this.today}/${this.restaurant.id}/${guest.user_id}`).update({custom_id: custom_id, status: "open"}).then(() => {
+      return this.afDB.list(`orders/${this.restaurant.id}/${this.today}`).push({ user_id: guest.user_id, custom_id: custom_id, status: "open"})
     });
   }
 
