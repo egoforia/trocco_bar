@@ -17,10 +17,6 @@ import { OrdersLobbyFireService } from '../../providers/orders-lobby-fire-servic
   templateUrl: 'orders-lobby.html',
 })
 export class OrdersLobbyPage {
-
-  open$: Observable<any[]>;
-  menuopts: String = 'waiting';
-  orders: Array<any>;
   restaurant: Observable<any>;
   guests: Array<any>;
   activeOrders: Array<any>;
