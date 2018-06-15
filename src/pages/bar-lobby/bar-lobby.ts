@@ -121,8 +121,7 @@ export class BarLobbyPage {
   }
 
   openOrderDetailModal(order, status) {
-    console.log(order, status)
-    // const modal = this.modalCtrl.create('page-order-modal', { type: status, order: order })
-    // modal.present();
+    const modal = this.modalCtrl.create('page-order-modal', { type: status, order: order })
+    modal.present();
   }
 }

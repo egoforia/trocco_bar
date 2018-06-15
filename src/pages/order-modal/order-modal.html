@@ -19,6 +19,18 @@
           <div *ngSwitchCase="'finished'">
             Finished
           </div>
+
+          <div *ngSwitchCase="'open'">
+            Open
+          </div>
+
+          <div *ngSwitchCase="'preparing'">
+            Preparing
+          </div>
+
+          <div *ngSwitchCase="'ready'">
+            Ready
+          </div>
         </div>
       </span>
     </ion-title>
@@ -27,6 +39,8 @@
 
 <ion-content padding>
   <div [ngSwitch]="type">
+
+    <!-- Guest -->
     <div *ngSwitchCase="'guest'">
       <input type="text" [(ngModel)]="custom_id">
       <button ion-button [disabled]="!custom_id" (click)="openOrder()">
@@ -42,7 +56,9 @@
         </h2>
       </ion-item>
     </div>
-  
+    <!-- Guest -->
+    
+    <!-- Active Order -->
     <div *ngSwitchCase="'active'">
       <ion-list no-margin>
         <ion-item *ngFor="let dish of order.dishes">
@@ -69,7 +85,9 @@
         </ion-item>
       </ion-list>
     </div>
+    <!-- Active Order -->
   
+    <!-- Finished Order -->
     <div *ngSwitchCase="'finished'">
       <ion-list no-margin>
         <ion-item *ngFor="let dish of order.dishes">
@@ -83,5 +101,94 @@
         </ion-item>
       </ion-list>
     </div>
+    <!-- Finished Order -->
+
+    <!-- Open Order -->
+    <div *ngSwitchCase="'open'">
+      <ion-list no-margin>
+        <ion-item *ngFor="let dish of order.dishes">
+          <ion-avatar item-start>
+            <img src="{{dish.picture}}" />
+          </ion-avatar>
+          <h2 ion-text color="dark" class="fw700">
+            {{ dish.name }} x
+            <span>{{ dish.quantity }}</span>
+          </h2>
+    
+          <button ion-button (click)="changeOrderStatusTo('canceled')">
+            Rejeitar pedido
+          </button>
+          <button ion-button (click)="changeOrderStatusTo('preparing')">
+            Preparar pedido
+          </button>
+          <button ion-button (click)="changeOrderStatusTo('ready')">
+            Pronto para retirar
+          </button>
+          <button ion-button (click)="changeOrderStatusTo('finalized')">
+            Pedido entregue
+          </button>
+        </ion-item>
+      </ion-list>
+    </div>
+    <!-- Open Order -->
+
+    <!-- Preparing Order -->
+    <div *ngSwitchCase="'preparing'">
+      <ion-list no-margin>
+        <ion-item *ngFor="let dish of order.dishes">
+          <ion-avatar item-start>
+            <img src="{{dish.picture}}" />
+          </ion-avatar>
+          <h2 ion-text color="dark" class="fw700">
+            {{ dish.name }} x
+            <span>{{ dish.quantity }}</span>
+          </h2>
+    
+          <button ion-button (click)="changeOrderStatusTo('canceled')">
+            Rejeitar pedido
+          </button>
+          <button ion-button (click)="changeOrderStatusTo('preparing')">
+            Preparar pedido
+          </button>
+          <button ion-button (click)="changeOrderStatusTo('ready')">
+            Pronto para retirar
+          </button>
+          <button ion-button (click)="changeOrderStatusTo('finalized')">
+            Pedido entregue
+          </button>
+        </ion-item>
+      </ion-list>
+    </div>
+    <!-- Preparing Order -->
+
+    <!-- Ready Order -->
+    <div *ngSwitchCase="'ready'">
+      <ion-list no-margin>
+        <ion-item *ngFor="let dish of order.dishes">
+          <ion-avatar item-start>
+            <img src="{{dish.picture}}" />
+          </ion-avatar>
+          <h2 ion-text color="dark" class="fw700">
+            {{ dish.name }} x
+            <span>{{ dish.quantity }}</span>
+          </h2>
+    
+          <button ion-button (click)="changeOrderStatusTo('canceled')">
+            Rejeitar pedido
+          </button>
+          <button ion-button (click)="changeOrderStatusTo('preparing')">
+            Preparar pedido
+          </button>
+          <button ion-button (click)="changeOrderStatusTo('ready')">
+            Pronto para retirar
+          </button>
+          <button ion-button (click)="changeOrderStatusTo('finalized')">
+            Pedido entregue
+          </button>
+        </ion-item>
+      </ion-list>
+    </div>
+    <!-- Ready Order -->
+
   </div>
 </ion-content>
