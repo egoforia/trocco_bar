@@ -121,12 +121,6 @@
           <button ion-button (click)="changeOrderStatusTo('preparing')">
             Preparar pedido
           </button>
-          <button ion-button (click)="changeOrderStatusTo('ready')">
-            Pronto para retirar
-          </button>
-          <button ion-button (click)="changeOrderStatusTo('finalized')">
-            Pedido entregue
-          </button>
         </ion-item>
       </ion-list>
     </div>
@@ -144,17 +138,8 @@
             <span>{{ dish.quantity }}</span>
           </h2>
     
-          <button ion-button (click)="changeOrderStatusTo('canceled')">
-            Rejeitar pedido
-          </button>
-          <button ion-button (click)="changeOrderStatusTo('preparing')">
-            Preparar pedido
-          </button>
           <button ion-button (click)="changeOrderStatusTo('ready')">
             Pronto para retirar
-          </button>
-          <button ion-button (click)="changeOrderStatusTo('finalized')">
-            Pedido entregue
           </button>
         </ion-item>
       </ion-list>
@@ -172,19 +157,6 @@
             {{ dish.name }} x
             <span>{{ dish.quantity }}</span>
           </h2>
-    
-          <button ion-button (click)="changeOrderStatusTo('canceled')">
-            Rejeitar pedido
-          </button>
-          <button ion-button (click)="changeOrderStatusTo('preparing')">
-            Preparar pedido
-          </button>
-          <button ion-button (click)="changeOrderStatusTo('ready')">
-            Pronto para retirar
-          </button>
-          <button ion-button (click)="changeOrderStatusTo('finalized')">
-            Pedido entregue
-          </button>
         </ion-item>
       </ion-list>
     </div>
