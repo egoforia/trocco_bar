@@ -13,7 +13,7 @@ import { OrdersLobbyFireService } from '../../providers/orders-lobby-fire-servic
 export class OrderModalPage {
   public type: String = 'guest';
   public order: any;
-  public custom_id: String = '';
+  public check_number: String = '';
 
   constructor(
       public navCtrl: NavController,
@@ -30,7 +30,7 @@ export class OrderModalPage {
   }
 
   openOrder() {
-    this.orderLobbyService.setGuestToOpen(this.order, this.custom_id);
+    this.orderLobbyService.setGuestToOpen(this.order, this.check_number);
     this.closeModal();
   }
 

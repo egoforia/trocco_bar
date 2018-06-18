@@ -69,7 +69,7 @@ export class OrdersLobbyPage {
             status: orders[key]["status"],
             user_id: orders[key]["user_id"],
             dishes: orders[key]["dishes"] || [],
-            custom_id: orders[key]["custom_id"]
+            check_number: orders[key]["check_number"]
           }
         });
         this.activeOrders = this.activeOrders.filter((item: any) => {
@@ -77,7 +77,7 @@ export class OrdersLobbyPage {
             return item;
           }
         });
-        this.sortListAndGetUserInformation(this.activeOrders, 'custom_id', '>');
+        this.sortListAndGetUserInformation(this.activeOrders, 'check_number', '>');
       } else {
         this.activeOrders = []
       }
@@ -97,7 +97,7 @@ export class OrdersLobbyPage {
           }
         });
         this.finishedOrders = this.finishedOrders.filter((item: any) => item.status == "ok");
-        this.sortListAndGetUserInformation(this.finishedOrders, 'custom_id', '>');
+        this.sortListAndGetUserInformation(this.finishedOrders, 'check_number', '>');
       } else {
         this.finishedOrders = []
       }

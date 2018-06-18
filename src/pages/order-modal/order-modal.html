@@ -42,8 +42,8 @@
 
     <!-- Guest -->
     <div *ngSwitchCase="'guest'">
-      <input type="text" [(ngModel)]="custom_id">
-      <button ion-button [disabled]="!custom_id" (click)="openOrder()">
+      <input type="text" [(ngModel)]="check_number">
+      <button ion-button [disabled]="!check_number" (click)="openOrder()">
         Abrir comanda
       </button>
 

@@ -19,7 +19,7 @@
               <img src="{{order.photoUrl}}" />
             </ion-avatar>
             <h2 ion-text color="dark" class="fw700">
-               {{ order.displayName }} - {{order.custom_id}}
+               {{ order.displayName }} - {{order.check_number}}
             </h2>
             <button ion-button (click)="openOrderDetailModal(order, 'open')">
               Ver comanda
@@ -39,7 +39,7 @@
               <img src="{{order.photoUrl}}" />
             </ion-avatar>
             <h2 ion-text color="dark" class="fw700">
-              {{ order.displayName }} - {{order.custom_id}}
+              {{ order.displayName }} - {{order.check_number}}
             </h2>
             <button ion-button (click)="openOrderDetailModal(order, 'preparing')">
               Ver comanda
@@ -59,7 +59,7 @@
               <img src="{{order.photoUrl}}" />
             </ion-avatar>
             <h2 ion-text color="dark" class="fw700">
-              {{ order.displayName }} - {{order.custom_id}}
+              {{ order.displayName }} - {{order.check_number}}
             </h2>
             <button ion-button (click)="openOrderDetailModal(order, 'ready')">
               Ver comanda

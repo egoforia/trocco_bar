@@ -52,7 +52,7 @@ export class BarLobbyPage {
             status: orders[key]["status"],
             user_id: orders[key]["user_id"],
             dishes: orders[key]["dishes"] || [],
-            custom_id: orders[key]["custom_id"],
+            check_number: orders[key]["check_number"],
             created_at: new Date(orders[key]["created_at"])
           }
         });
@@ -73,7 +73,7 @@ export class BarLobbyPage {
             status: orders[key]["status"],
             user_id: orders[key]["user_id"],
             dishes: orders[key]["dishes"] || [],
-            custom_id: orders[key]["custom_id"],
+            check_number: orders[key]["check_number"],
             created_at: new Date(orders[key]["created_at"])
           }
         });
@@ -94,7 +94,7 @@ export class BarLobbyPage {
             status: orders[key]["status"],
             user_id: orders[key]["user_id"],
             dishes: orders[key]["dishes"] || [],
-            custom_id: orders[key]["custom_id"],
+            check_number: orders[key]["check_number"],
             created_at: new Date(orders[key]["created_at"])
           }
         });
