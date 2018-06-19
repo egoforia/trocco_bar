@@ -21,8 +21,12 @@
             <h2 ion-text color="dark" class="fw700">
                {{ order.displayName }} - {{order.check_number}}
             </h2>
-            <button ion-button (click)="openOrderDetailModal(order, 'open')">
-              Ver comanda
+
+            <button ion-button (click)="changeOrderStatusTo(order, 'canceled')">
+              Rejeitar pedido
+            </button><br>
+            <button ion-button (click)="changeOrderStatusTo(order, 'preparing')">
+              Preparar pedido
             </button>
           </ion-item>
 
@@ -41,8 +45,11 @@
             <h2 ion-text color="dark" class="fw700">
               {{ order.displayName }} - {{order.check_number}}
             </h2>
-            <button ion-button (click)="openOrderDetailModal(order, 'preparing')">
-              Ver comanda
+            <button ion-button (click)="changeOrderStatusTo(order, 'canceled')">
+              Cancelar pedido
+            </button><br>
+            <button ion-button (click)="changeOrderStatusTo(order, 'ready')">
+              Pronto para retirar
             </button>
           </ion-item>
 
@@ -61,8 +68,9 @@
             <h2 ion-text color="dark" class="fw700">
               {{ order.displayName }} - {{order.check_number}}
             </h2>
-            <button ion-button (click)="openOrderDetailModal(order, 'ready')">
-              Ver comanda
+            <br>
+            <button ion-button (click)="changeOrderStatusTo(order, 'delivered')">
+              Pedido Entregue
             </button>
           </ion-item>
 

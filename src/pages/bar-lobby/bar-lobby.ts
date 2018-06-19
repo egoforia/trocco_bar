@@ -127,4 +127,8 @@ export class BarLobbyPage {
     const modal = this.modalCtrl.create('page-order-modal', { type: status, order: order })
     modal.present();
   }
+
+  changeOrderStatusTo(order, status = 'preparing') {
+    this.ordersLobbyService.getOrderRef(order.id).update({ status: status });
+  }
 }
