@@ -1,13 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, AlertController } from 'ionic-angular';
 import { Firebase } from '@ionic-native/firebase';
-import { FCM } from '@ionic-native/fcm';
-
 import { AngularFireDatabase } from 'angularfire2/database';
 import { RestaurantFireService } from '../providers/restaurant-fire-service'
-
 import { AngularFireAuth } from 'angularfire2/auth';
-declare var FCMPlugin: any;
 
 export interface MenuItem {
     title: string;
@@ -49,8 +45,7 @@ export class foodIonicApp {
       public afDB: AngularFireDatabase,
       public afAuth: AngularFireAuth,
       public alertCtrl: AlertController,
-      private restaurantService: RestaurantFireService,
-      private fcm: FCM
+      private restaurantService: RestaurantFireService
     ) {
       this.initializeApp();
 
@@ -89,13 +84,6 @@ export class foodIonicApp {
 
     initializeApp() {
       this.platform.ready().then(() => {
-        if(this.platform.is('cordova')) {
-          // Should update user with a field with device_token_id
-          this.fcm.getToken().then((token: String) => {
-            console.log(`Device Token Id: ${token}`)
-          });
-          this.pushsetup();
-        }
         const authSubscription = this.afAuth.authState.subscribe((user: any) => {
           console.log('authState subscribed user: ', JSON.stringify(user));
 
@@ -126,20 +114,6 @@ export class foodIonicApp {
 	      this.tabsPlacement = 'top';
 	      this.tabsLayout = 'icon-left';
       }
-    }
-
-    pushsetup() {
-      setTimeout(() => {
-        FCMPlugin.onNotification((data: any) => {
-          console.log(data)
-          this.alertCtrl.create({
-            title: data.title,
-            message: data.message
-          }).present();
-        }, (error) => {
-          console.log(error);
-        });
-      }, 5000);
     }
 
     initializeFirebase() {
