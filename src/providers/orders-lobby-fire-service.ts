@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { UsersFireService } from './users-fire-service';
 import { RestaurantFireService } from './restaurant-fire-service';
-import { AngularFireAuth } from 'angularfire2/auth';
 
 @Injectable()
 export class OrdersLobbyFireService {
@@ -11,7 +10,7 @@ export class OrdersLobbyFireService {
   today: string = '';
   guests: Array<any>;
 
-  constructor(public afDB: AngularFireDatabase, private afAuth: AngularFireAuth, public usersService: UsersFireService, public restaurantService: RestaurantFireService) {
+  constructor(public afDB: AngularFireDatabase, public usersService: UsersFireService, public restaurantService: RestaurantFireService) {
     this.today = new Date().toISOString().slice(0, 10);
     this.usersService.getCurrentUser$().subscribe((restaurant: any) => {
       this.restaurant = restaurant;

@@ -1,22 +1,13 @@
 import { Injectable } from '@angular/core';
-
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { CartFireService } from './cart-fire-service';
 import { RestaurantFireService } from './restaurant-fire-service';
-import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-
-// import 'rxjs/add/observable/from';
-
-import { share } from 'rxjs/operators';
-
 import { AngularFireAuth } from 'angularfire2/auth';
 
 @Injectable()
 export class OrdersFireService {
-
   ordersRef: AngularFireList<{}>;
-
   ordersSubject: BehaviorSubject<any>;
 
   constructor(private afDB: AngularFireDatabase, private cartService: CartFireService, private restaurantService: RestaurantFireService, private afAuth: AngularFireAuth) {
@@ -62,7 +53,6 @@ export class OrdersFireService {
 
     order.dishes.push({dish: new BehaviorSubject<any>(dish), quantity: quantity, dish_id: dish.id});
     this.ordersSubject.next(order);
-    // debugger;
   }
 
   addToCart() {

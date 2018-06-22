@@ -26,7 +26,7 @@ export class CartFireService {
     // });
 
     try {
-      const uid = this.afAuth.auth.currentUser.uid;
+      // const uid = this.afAuth.auth.currentUser.uid;
       const today = new Date().toISOString().slice(0, 10);
       const restaurant_id = this.restaurantService.getActive().id;
 

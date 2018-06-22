@@ -1,13 +1,8 @@
 import {Component} from '@angular/core';
 import {IonicPage, ActionSheetController, ActionSheet, NavController, NavParams, ToastController} from 'ionic-angular';
-
-// import {RestaurantService} from '../../providers/restaurant-service-mock';
 import {DishService} from '../../providers/dish-service-mock';
 import {CartService} from '../../providers/cart-service-mock';
-
 import { RestaurantFireService } from '../../providers/restaurant-fire-service'
-import { Observable } from 'rxjs/Observable';
-
 import leaflet from 'leaflet';
 
 @IonicPage({

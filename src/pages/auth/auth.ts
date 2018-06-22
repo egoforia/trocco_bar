@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormBuilder, AbstractControl } from '@angular/forms';
-import { IonicPage, NavController, AlertController, ToastController, MenuController, Platform } from 'ionic-angular';
-
-import { map, take, debounceTime } from 'rxjs/operators';
-
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { IonicPage, NavController, AlertController, ToastController, MenuController } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
-import * as firebase from 'firebase/app';
 import { UsersFireService } from '../../providers/users-fire-service';
 import { RestaurantFireService } from '../../providers/restaurant-fire-service';
 
@@ -31,7 +27,6 @@ export class AuthPage implements OnInit {
 		public menu:					MenuController,
 		public toastCtrl: 		ToastController,
 		public afAuth: 				AngularFireAuth,
-    private platform: 		Platform,
 		private usersService: UsersFireService,
 		private restaurantService: RestaurantFireService
 	) {

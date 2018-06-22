@@ -1,12 +1,7 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
-
-// import {DishService} from '../../providers/dish-service-mock';
-
 import { OrdersFireService } from '../../providers/orders-fire-service';
 import { RestaurantFireService } from '../../providers/restaurant-fire-service'
-import { CartFireService } from '../../providers/cart-fire-service'
-import { Observable } from 'rxjs/Observable';
 
 @IonicPage({
 	name: 'page-dish-detail',

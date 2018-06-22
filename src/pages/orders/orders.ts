@@ -3,8 +3,6 @@ import { IonicPage, NavController, NavParams, ToastController, AlertController }
 import { OrdersFireService } from '../../providers/orders-fire-service';
 import { Observable } from 'rxjs/Observable';
 
-import { AngularFireAuth } from 'angularfire2/auth';
-
 @IonicPage({
 	name: 'page-orders',
 	segment: 'orders'
@@ -23,7 +21,6 @@ export class OrdersPage {
 		public navParams: 		NavParams,
 		public toastCtrl: 		ToastController,
 		public ordersService: OrdersFireService,
-		private afAuth: 			AngularFireAuth,
 		private alertCtrl: 		AlertController
 	) {
 		this.getLastOrder();
