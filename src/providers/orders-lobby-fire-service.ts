@@ -55,12 +55,13 @@ export class OrdersLobbyFireService {
     return this.afDB.object(`estabelecimentos/${this.restaurant.id}/dishes/${dish_id}`).valueChanges();
   }
 
-  setGuestToOpen(guest, check_number) {
+  setGuestToOpen(guest, check_number, entrance_value = 0.0) {
     this.afDB.object(`guests/${this.today}/${this.restaurant.id}/${guest.user_id}`).update({check_number: check_number, status: "open"}).then(() => {
       return this.afDB.list(`orders/${this.restaurant.id}/${this.today}`).push({
         user_id: guest.user_id,
         check_number: check_number,
         status: "open",
+        entrance_value: entrance_value,
         created_at: + new Date()
       });
     });

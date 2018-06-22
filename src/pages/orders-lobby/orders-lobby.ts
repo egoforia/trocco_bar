@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, LoadingController  } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { RestaurantFireService } from '../../providers/restaurant-fire-service';
@@ -27,7 +27,8 @@ export class OrdersLobbyPage {
     public restaurantService: RestaurantFireService,
     public usersService: UsersFireService,
     public ordersLobbyService: OrdersLobbyFireService,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController,
+    public loadingCtrl: LoadingController
   ) {
     this.guests          = [];
     this.activeOrders    = [];
@@ -39,6 +40,13 @@ export class OrdersLobbyPage {
       this.getActiveOrders();
       this.getFinishedOrders();
     });
+  }
+
+  showLoading() {
+    this.loadingCtrl.create({
+      content: "Atualizando lista...",
+      duration: 3000
+    }).present();
   }
 
   getGuests() {
@@ -56,6 +64,10 @@ export class OrdersLobbyPage {
         this.guests = this.guests.filter((item: any) => item.status == "waiting");
       } else {
         this.guests = [];
+      }
+
+      if (this.guests.length > 0) {
+        this.showLoading();
       }
     });
   }
@@ -79,7 +91,11 @@ export class OrdersLobbyPage {
         });
         this.sortListAndGetUserInformation(this.activeOrders, 'check_number', '>');
       } else {
-        this.activeOrders = []
+        this.activeOrders = [];
+      }
+
+      if(this.activeOrders.length > 0) {
+        this.showLoading();
       }
     });
   }
@@ -99,7 +115,11 @@ export class OrdersLobbyPage {
         this.finishedOrders = this.finishedOrders.filter((item: any) => item.status == "ok");
         this.sortListAndGetUserInformation(this.finishedOrders, 'check_number', '>');
       } else {
-        this.finishedOrders = []
+        this.finishedOrders = [];
+      }
+
+      if (this.finishedOrders.length > 0) {
+        this.showLoading();
       }
     });
   }

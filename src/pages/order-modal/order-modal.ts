@@ -14,6 +14,7 @@ export class OrderModalPage {
   public type: String = 'guest';
   public order: any;
   public check_number: String = '';
+  public entrance_value: Float32Array = 0.0;
 
   constructor(
       public navCtrl: NavController,
@@ -30,13 +31,13 @@ export class OrderModalPage {
   }
 
   openOrder() {
-    this.orderLobbyService.setGuestToOpen(this.order, this.check_number);
+    this.orderLobbyService.setGuestToOpen(this.order, this.check_number, this.entrance_value);
     this.closeModal();
   }
 
   getDishes() {
     if(this.order.dishes) {
-      this.order.dishes.forEach((item, index) => {
+      this.order.dishes.forEach((item, _index) => {
         const sub = this.orderLobbyService.getDish$(item.dish_id).subscribe((data) => {
           item = Object.assign(item, data);
           sub.unsubscribe();
