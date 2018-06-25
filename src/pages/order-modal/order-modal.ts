@@ -25,7 +25,7 @@ export class OrderModalPage {
   ) {
     this.type = this.navParams.get('type');
     this.order = this.navParams.get('order');
-    this.getDishes();
+    this.getGuestDishes();
   }
 
   closeModal() {
@@ -56,13 +56,41 @@ export class OrderModalPage {
     this.closeModal();
   }
 
-  getDishes() {
+  getGuestDishes() {
+    let dishes = []
+
+    this.orderLobbyService.filterGuestByUserId$(this.order).subscribe((orders: any) => {
+      if (orders) {
+        orders.map(order => order["dishes"]).filter((d) => d != undefined).map((dishesArray) => {
+          dishesArray.map((item) => dishes.push(item));
+        });
+        this.order.dishes = dishes;
+        dishes = [];
+        this.getDishInformation();
+      }
+    });
+  }
+
+  calcTotal() {
+    this.order.total = 0;
+    try {
+      this.order.total += Number(this.order.entrance_value);
+    } catch(e) {}
+
+    this.order.dishes.map((dish) => {
+      this.order.total += (dish.price * dish.quantity);
+    });
+  }
+
+  getDishInformation() {
     if(this.order.dishes) {
       this.order.dishes.forEach((item, _index) => {
         const sub = this.orderLobbyService.getDish$(item.dish_id).subscribe((data) => {
           item = Object.assign(item, data);
+          this.order.total += item.price;
+          this.calcTotal();
           sub.unsubscribe();
-        })
+        });
       });
     }
   }

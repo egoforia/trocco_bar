@@ -13,23 +13,23 @@
           </div>
 
           <div *ngSwitchCase="'active'">
-            Active
+            Comanda #{{order.check_number}}
           </div>
 
           <div *ngSwitchCase="'finished'">
-            Finished
+            Comanda #{{order.check_number}}
           </div>
 
           <div *ngSwitchCase="'open'">
-            Open
+            Comanda #{{order.check_number}}
           </div>
 
           <div *ngSwitchCase="'preparing'">
-            Preparing
-          </div>
+            Comanda #{{order.check_number}}
+        </div>
 
           <div *ngSwitchCase="'ready'">
-            Ready
+            Comanda #{{order.check_number}}
           </div>
         </div>
       </span>
@@ -62,6 +62,12 @@
     <!-- Active Order -->
     <div *ngSwitchCase="'active'">
       <ion-list no-margin>
+        <ion-item *ngIf="order.entrance_value">
+          <h2 ion-text color="dark" class="fw700">
+            Valor da entrada: {{ order.entrance_value | currency:"R$" }}
+          </h2>
+        </ion-item>
+
         <ion-item *ngFor="let dish of order.dishes">
           <ion-avatar item-start>
             <img src="{{dish.picture}}" />
@@ -91,6 +97,12 @@
     <!-- Finished Order -->
     <div *ngSwitchCase="'finished'">
       <ion-list no-margin>
+        <ion-item *ngIf="order.entrance_value">
+          <h2 ion-text color="dark" class="fw700">
+            Valor da entrada: {{ order.entrance_value | currency:"R$" }}
+          </h2>
+        </ion-item>
+
         <ion-item *ngFor="let dish of order.dishes">
           <ion-avatar item-start>
             <img src="{{dish.picture}}" />
@@ -107,6 +119,12 @@
     <!-- Open Order -->
     <div *ngSwitchCase="'open'">
       <ion-list no-margin>
+        <ion-item *ngIf="order.entrance_value">
+          <h2 ion-text color="dark" class="fw700">
+            Valor da entrada: {{ order.entrance_value | currency:"R$" }}
+          </h2>
+        </ion-item>
+
         <ion-item *ngFor="let dish of order.dishes">
           <ion-avatar item-start>
             <img src="{{dish.picture}}" />
@@ -115,13 +133,10 @@
             {{ dish.name }} x
             <span>{{ dish.quantity }}</span>
           </h2>
-    
-          <button ion-button (click)="changeOrderStatusTo('canceled')">
-            Rejeitar pedido
-          </button>
-          <button ion-button (click)="changeOrderStatusTo('preparing')">
-            Preparar pedido
-          </button>
+        </ion-item>
+
+        <ion-item>
+          <h2 ion-text color="dark" class="fw700">Total: {{ order.total | currency:"R$" }}</h2>
         </ion-item>
       </ion-list>
     </div>
@@ -130,6 +145,12 @@
     <!-- Preparing Order -->
     <div *ngSwitchCase="'preparing'">
       <ion-list no-margin>
+        <ion-item *ngIf="order.entrance_value">
+          <h2 ion-text color="dark" class="fw700">
+            Valor da entrada: {{ order.entrance_value | currency:"R$" }}
+          </h2>
+        </ion-item>
+
         <ion-item *ngFor="let dish of order.dishes">
           <ion-avatar item-start>
             <img src="{{dish.picture}}" />
@@ -150,6 +171,12 @@
     <!-- Ready Order -->
     <div *ngSwitchCase="'ready'">
       <ion-list no-margin>
+        <ion-item *ngIf="order.entrance_value">
+          <h2 ion-text color="dark" class="fw700">
+            Valor da entrada: {{ order.entrance_value | currency:"R$" }}
+          </h2>
+        </ion-item>
+
         <ion-item *ngFor="let dish of order.dishes">
           <ion-avatar item-start>
             <img src="{{dish.picture}}" />

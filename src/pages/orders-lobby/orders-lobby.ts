@@ -16,9 +16,9 @@ import { OrdersLobbyFireService } from '../../providers/orders-lobby-fire-servic
 })
 export class OrdersLobbyPage {
   restaurant: Observable<any>;
-  guests: Array<any>;
-  activeOrders: Array<any>;
-  finishedOrders: Array<any>;
+  waitingGuests: Array<any>;
+  activeGuests: Array<any>;
+  finishedGuests: Array<any>;
 
   constructor(
     public navCtrl: NavController,
@@ -30,15 +30,15 @@ export class OrdersLobbyPage {
     public modalCtrl: ModalController,
     public loadingCtrl: LoadingController
   ) {
-    this.guests          = [];
-    this.activeOrders    = [];
-    this.finishedOrders  = [];
+    this.waitingGuests   = [];
+    this.activeGuests    = [];
+    this.finishedGuests  = [];
 
     this.usersService.getCurrentUser$().subscribe((restaurant: any) => {
       this.restaurant = restaurant;
-      this.getGuests();
-      this.getActiveOrders();
-      this.getFinishedOrders();
+      this.getWaitingGuests();
+      this.getActiveGuests();
+      this.getFinishedGuests();
     });
   }
 
@@ -49,76 +49,52 @@ export class OrdersLobbyPage {
     }).present();
   }
 
-  getGuests() {
+  convertGuestToObject(array, key) {
+    const guest = array[key];
+
+    return {
+      user_id: key,
+      status: guest["status"],
+      entrance_value: guest["entrance_value"],
+      check_number: guest["check_number"],
+      created_at: new Date(guest["created_at"])
+    }
+  }
+
+  getWaitingGuests() {
     this.ordersLobbyService.getGuests$().subscribe((guests: any) => {
       if (guests) {
-        this.guests = Object.keys(guests).map((key: any) => {
-          return {
-            user_id: key,
-            status: guests[key]["status"],
-            created_at: new Date(guests[key]["created_at"])
-          }
-        });
-
-        this.sortListAndGetUserInformation(this.guests);
-        this.guests = this.guests.filter((item: any) => item.status == "waiting");
+        this.waitingGuests = Object.keys(guests).map((key: any) => this.convertGuestToObject(guests, key));
+        this.sortListAndGetUserInformation(this.waitingGuests);
+        this.waitingGuests = this.waitingGuests.filter((item: any) => item.status == "waiting");
       } else {
-        this.guests = [];
-      }
-
-      if (this.guests.length > 0) {
+        this.waitingGuests = [];
         this.showLoading();
       }
     });
   }
 
-  getActiveOrders() {
-    this.ordersLobbyService.getOrders$().subscribe((orders: any) => {
-      if(orders) {
-        this.activeOrders = Object.keys(orders).map((key: any) => {
-          return {
-            id: key,
-            status: orders[key]["status"],
-            user_id: orders[key]["user_id"],
-            dishes: orders[key]["dishes"] || [],
-            check_number: orders[key]["check_number"]
-          }
-        });
-        this.activeOrders = this.activeOrders.filter((item: any) => {
-          if(item.status == "preparing" || item.status == "ready" || item.status == "open") {
-            return item;
-          }
-        });
-        this.sortListAndGetUserInformation(this.activeOrders, 'check_number', '>');
+  getActiveGuests() {
+    this.ordersLobbyService.getGuests$().subscribe((guests: any) => {
+      if (guests) {
+        this.activeGuests = Object.keys(guests).map((key: any) => this.convertGuestToObject(guests, key));
+        this.sortListAndGetUserInformation(this.activeGuests);
+        this.activeGuests = this.activeGuests.filter((item: any) => item.status == "open");
       } else {
-        this.activeOrders = [];
-      }
-
-      if(this.activeOrders.length > 0) {
+        this.activeGuests = [];
         this.showLoading();
       }
     });
   }
 
-  getFinishedOrders() {
-    this.ordersLobbyService.getOrders$().subscribe((orders: any) => {
-      if (orders) {
-        this.finishedOrders = Object.keys(orders).map((key: any) => {
-          return {
-            id: key,
-            status: orders[key]["status"],
-            user_id: orders[key]["user_id"],
-            dishes: orders[key]["dishes"] || [],
-
-          }
-        });
-        this.finishedOrders = this.finishedOrders.filter((item: any) => item.status == "ok");
-        this.sortListAndGetUserInformation(this.finishedOrders, 'check_number', '>');
+  getFinishedGuests() {
+    this.ordersLobbyService.getGuests$().subscribe((guests: any) => {
+      if (guests) {
+        this.finishedGuests = Object.keys(guests).map((key: any) => this.convertGuestToObject(guests, key));
+        this.sortListAndGetUserInformation(this.finishedGuests);
+        this.finishedGuests = this.finishedGuests.filter((item: any) => item.status == "finished");
       } else {
-        this.finishedOrders = [];
-      }
-
-      if (this.finishedOrders.length > 0) {
+        this.finishedGuests = [];
         this.showLoading();
       }
     });
@@ -141,12 +117,8 @@ export class OrdersLobbyPage {
     list.map((entry: any) => this.getGuestUserInformation(entry));
   }
 
-  setPreparing(order_id) {
-    this.ordersLobbyService.setPreparing(order_id);
-  }
-
-  openOrderDetailModal(order, status) {
-    const modal = this.modalCtrl.create('page-order-modal', { type: status, order: order })
+  openGuestDetailModal(guest, status) {
+    const modal = this.modalCtrl.create('page-order-modal', { type: status, order: guest })
     modal.present();
   }
 }

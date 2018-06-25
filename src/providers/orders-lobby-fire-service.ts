@@ -56,15 +56,22 @@ export class OrdersLobbyFireService {
   }
 
   setGuestToOpen(guest, check_number, entrance_value = 0.0) {
-    this.afDB.object(`guests/${this.today}/${this.restaurant.id}/${guest.user_id}`).update({check_number: check_number, status: "open"}).then(() => {
-      return this.afDB.list(`orders/${this.restaurant.id}/${this.today}`).push({
-        user_id: guest.user_id,
-        check_number: check_number,
-        status: "open",
-        entrance_value: entrance_value,
-        created_at: + new Date()
-      });
+    const objToUpdate = {
+      user_id: guest.user_id,
+      check_number: check_number,
+      status: "open",
+      entrance_value: entrance_value,
+      created_at: + new Date()
+    }
+
+    this.afDB.object(`guests/${this.today}/${this.restaurant.id}/${guest.user_id}`).update(objToUpdate).then(() => {
+      objToUpdate.status = 'finished';
+      return this.afDB.list(`orders/${this.restaurant.id}/${this.today}`).push(objToUpdate);
     });
+  }
+
+  filterGuestByUserId$(guest) {
+    return this.afDB.list(`orders/${this.restaurant.id}/${this.today}`, ref => ref.orderByChild('user_id').equalTo(guest.user_id)).valueChanges();
   }
 
   cancelGuest(guest) {

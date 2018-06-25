@@ -14,60 +14,48 @@
 		<ion-row no-padding>
 			<ion-col col-4>
 				<ion-list>
-					<ion-item *ngFor="let order of guests">
+					<ion-item *ngFor="let guest of waitingGuests">
 						<ion-avatar item-start>
-							<img src="{{order.photoUrl}}" />
+							<img src="{{guest.photoUrl}}" />
 						</ion-avatar>
 						<h2 ion-text color="dark" class="fw700">
-							{{ order.displayName }} - {{order.rg}}
+							{{ guest.displayName }} - {{guest.rg}}
 						</h2>
-						<button ion-button (click)="openOrderDetailModal(order, 'guest')">
+						<button ion-button (click)="openGuestDetailModal(guest, 'guest')">
 							Abrir comanda
 						</button>
 					</ion-item>
-				
-					<ion-item no-padding *ngIf="guests.length == 0">
-						<h2 ion-text color="dark" class="fw500">Nenhum item</h2>
+				</ion-list>
+			</ion-col>
+
+			<ion-col col-4>
+				<ion-list>
+					<ion-item *ngFor="let guest of activeGuests">
+						<ion-avatar item-start>
+							<img src="{{guest.photoUrl}}" />
+						</ion-avatar>
+						<h2 ion-text color="dark" class="fw700">
+							{{ guest.displayName }} - {{guest.check_number}}
+						</h2>
+						<button ion-button (click)="openGuestDetailModal(guest, 'open')">
+							Ver comanda
+						</button>
 					</ion-item>
 				</ion-list>
 			</ion-col>
 
 			<ion-col col-4>
 				<ion-list>
-					<ion-item *ngFor="let order of activeOrders">
+					<ion-item *ngFor="let guest of finishedGuests">
 						<ion-avatar item-start>
-							<img src="{{order.photoUrl}}" />
+							<img src="{{guest.photoUrl}}" />
 						</ion-avatar>
 						<h2 ion-text color="dark" class="fw700">
-							{{ order.displayName }} - {{order.check_number}}
+							{{ guest.displayName }} - {{guest.check_number}}
 						</h2>
-						<button ion-button (click)="openOrderDetailModal(order, 'active')">
+						<button ion-button (click)="openGuestDetailModal(guest, 'finished')">
 							Ver comanda
 						</button>
-					</ion-item>
-				
-					<ion-item no-padding *ngIf="activeOrders.length == 0">
-						<h2 ion-text color="dark" class="fw500">Nenhum item</h2>
-					</ion-item>
-				</ion-list>
-			</ion-col>
-
-			<ion-col col-4>
-				<ion-list>
-					<ion-item *ngFor="let order of finishedOrders">
-						<ion-avatar item-start>
-							<img src="{{order.photoUrl}}" />
-						</ion-avatar>
-						<h2 ion-text color="dark" class="fw700">
-							{{ order.displayName }} - {{order.check_number}}
-						</h2>
-						<button ion-button (click)="openOrderDetailModal(order, 'finished')">
-							Ver comanda
-						</button>
-					</ion-item>
-				
-					<ion-item no-padding *ngIf="finishedOrders.length == 0">
-						<h2 ion-text color="dark" class="fw500">Nenhum item</h2>
 					</ion-item>
 				</ion-list>
 			</ion-col>
