@@ -15,7 +15,7 @@ export class OrderModalPage {
   public type: String = 'guest';
   public order: any;
   public check_number: String = '';
-  public entrance_value: Float64Array;
+  public entrance_value: number = 0.0;
 
   constructor(
       public navCtrl: NavController,
