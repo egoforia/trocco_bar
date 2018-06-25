@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+
 import { OrdersLobbyFireService } from '../../providers/orders-lobby-fire-service'
 
 @IonicPage({
@@ -14,12 +15,13 @@ export class OrderModalPage {
   public type: String = 'guest';
   public order: any;
   public check_number: String = '';
-  public entrance_value: Float32Array = 0.0;
+  public entrance_value: Float64Array;
 
   constructor(
       public navCtrl: NavController,
       public navParams: NavParams,
-      private orderLobbyService: OrdersLobbyFireService
+      private orderLobbyService: OrdersLobbyFireService,
+      private alertCtrl: AlertController
   ) {
     this.type = this.navParams.get('type');
     this.order = this.navParams.get('order');
@@ -30,8 +32,27 @@ export class OrderModalPage {
     this.navCtrl.pop();
   }
 
+  showErrorAlert(message) {
+    this.alertCtrl.create({
+      title: 'Erro',
+      message: message,
+      buttons: [
+        {
+          text: 'Ok',
+          handler: (_data) => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    }).present();
+  }
+
   openOrder() {
-    this.orderLobbyService.setGuestToOpen(this.order, this.check_number, this.entrance_value);
+    try {
+      this.orderLobbyService.setGuestToOpen(this.order, this.check_number, this.entrance_value);
+    } catch(e) {
+      this.showErrorAlert('Não foi possível abrir a comanda, tente novamente');
+    }
     this.closeModal();
   }
 
