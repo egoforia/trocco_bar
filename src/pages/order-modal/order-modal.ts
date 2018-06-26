@@ -20,7 +20,7 @@ export class OrderModalPage {
   constructor(
       public navCtrl: NavController,
       public navParams: NavParams,
-      private orderLobbyService: OrdersLobbyFireService,
+      private ordersLobbyService: OrdersLobbyFireService,
       private alertCtrl: AlertController
   ) {
     this.type = this.navParams.get('type');
@@ -49,7 +49,7 @@ export class OrderModalPage {
 
   openOrder() {
     try {
-      this.orderLobbyService.setGuestToOpen(this.order, this.check_number, this.entrance_value);
+      this.ordersLobbyService.setGuestToOpen(this.order, this.check_number, this.entrance_value);
     } catch(e) {
       this.showErrorAlert('Não foi possível abrir a comanda, tente novamente');
     }
@@ -59,7 +59,7 @@ export class OrderModalPage {
   getGuestDishes() {
     let dishes = []
 
-    this.orderLobbyService.filterGuestByUserId$(this.order).subscribe((orders: any) => {
+    this.ordersLobbyService.filterGuestByUserId$(this.order).subscribe((orders: any) => {
       if (orders) {
         orders.map(order => order["dishes"]).filter((d) => d != undefined).map((dishesArray) => {
           dishesArray.map((item) => dishes.push(item));
@@ -85,7 +85,7 @@ export class OrderModalPage {
   getDishInformation() {
     if(this.order.dishes) {
       this.order.dishes.forEach((item, _index) => {
-        const sub = this.orderLobbyService.getDish$(item.dish_id).subscribe((data) => {
+        const sub = this.ordersLobbyService.getDish$(item.dish_id).subscribe((data) => {
           item = Object.assign(item, data);
           this.order.total += item.price;
           this.calcTotal();
@@ -96,7 +96,7 @@ export class OrderModalPage {
   }
 
   changeOrderStatusTo(status = 'preparing') {
-    this.orderLobbyService.getOrderRef(this.order.id).update({ status: status });
+    this.ordersLobbyService.getOrderRef(this.order.id).update({ status: status });
     this.closeModal();
   }
 }

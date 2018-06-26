@@ -19,8 +19,14 @@
               <img src="{{order.photoUrl}}" />
             </ion-avatar>
             <h2 ion-text color="dark" class="fw700">
-               {{ order.displayName }} - {{order.check_number}}
+              {{ order.displayName }} - {{order.check_number}}
             </h2>
+
+            <ion-list>
+              <ion-item *ngFor="let item of summary(order)">
+                {{item}}
+              </ion-item>
+            </ion-list>
 
             <button ion-button (click)="changeOrderStatusTo(order, 'canceled')">
               Rejeitar pedido
@@ -45,6 +51,13 @@
             <h2 ion-text color="dark" class="fw700">
               {{ order.displayName }} - {{order.check_number}}
             </h2>
+
+            <ion-list>
+              <ion-item *ngFor="let item of summary(order)">
+                {{item}}
+              </ion-item>
+            </ion-list>
+
             <button ion-button (click)="changeOrderStatusTo(order, 'canceled')">
               Cancelar pedido
             </button><br>
@@ -68,7 +81,13 @@
             <h2 ion-text color="dark" class="fw700">
               {{ order.displayName }} - {{order.check_number}}
             </h2>
-            <br>
+            
+            <ion-list>
+              <ion-item *ngFor="let item of summary(order)">
+                {{item}}
+              </ion-item>
+            </ion-list>
+            
             <button ion-button (click)="changeOrderStatusTo(order, 'delivered')">
               Pedido Entregue
             </button>
