@@ -56,14 +56,31 @@ export class OrderModalPage {
     this.closeModal();
   }
 
+  mapDishesAndStatus(orders) {
+    const dishes = [];
+
+    orders = orders.map(order => {
+      return { status: order.status, dishes: (order["dishes"] || []) }
+    });
+
+    Object.values(orders).map((order: any) => {
+      if(order.dishes.length != 0) {
+        Object.values(order.dishes).map((dish: any) => {
+          dish.status = order.status;
+          dishes.push(dish);
+        });
+      }
+    });
+
+    return dishes;
+  }
+
   getGuestDishes() {
     let dishes = []
 
     this.ordersLobbyService.filterGuestByUserId$(this.order).subscribe((orders: any) => {
       if (orders) {
-        orders.map(order => order["dishes"]).filter((d) => d != undefined).map((dishesArray) => {
-          dishesArray.map((item) => dishes.push(item));
-        });
+        dishes = this.mapDishesAndStatus(orders);
         this.order.dishes = dishes;
         dishes = [];
         this.getDishInformation();
@@ -78,7 +95,9 @@ export class OrderModalPage {
     } catch(e) {}
 
     this.order.dishes.map((dish) => {
-      this.order.total += (dish.price * dish.quantity);
+      if(dish.status !== 'canceled') {
+        this.order.total += (dish.price * dish.quantity);
+      }
     });
   }
 
