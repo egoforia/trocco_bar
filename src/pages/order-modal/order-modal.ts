@@ -25,6 +25,7 @@ export class OrderModalPage {
   ) {
     this.type = this.navParams.get('type');
     this.order = this.navParams.get('order');
+    this.resetEntranceValue()
     this.getGuestDishes();
   }
 
@@ -89,16 +90,22 @@ export class OrderModalPage {
   }
 
   calcTotal() {
-    this.order.total = 0;
-    try {
-      this.order.total += Number(this.order.entrance_value);
-    } catch(e) {}
+    this.resetEntranceValue();
 
     this.order.dishes.map((dish) => {
       if(dish.status !== 'canceled') {
         this.order.total += (dish.price * dish.quantity);
       }
     });
+  }
+
+  resetEntranceValue() {
+    this.order.total = 0;
+    try {
+      this.order.total += Number(this.order.entrance_value);
+    } catch (e) {
+      console.warn(e);
+    }
   }
 
   getDishInformation() {
