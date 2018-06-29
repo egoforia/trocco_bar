@@ -49,7 +49,7 @@ export class OrderModalPage {
 
   openOrder() {
     try {
-      this.ordersLobbyService.setGuestToOpen(this.order, this.check_number, this.entrance_value);
+      this.ordersLobbyService.setGuestToOpen(this.order, this.check_number, Number(this.entrance_value));
     } catch(e) {
       this.showErrorAlert('Não foi possível abrir a comanda, tente novamente');
     }

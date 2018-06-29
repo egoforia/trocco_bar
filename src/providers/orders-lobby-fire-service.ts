@@ -64,10 +64,12 @@ export class OrdersLobbyFireService {
       created_at: + new Date()
     }
 
-    this.afDB.object(`guests/${this.today}/${this.restaurant.id}/${guest.user_id}`).update(objToUpdate).then(() => {
-      objToUpdate.status = 'finished';
-      return this.afDB.list(`orders/${this.restaurant.id}/${this.today}`).push(objToUpdate);
-    });
+    // this.afDB.object(`guests/${this.today}/${this.restaurant.id}/${guest.user_id}`).update(objToUpdate).then(() => {
+    //   objToUpdate.status = 'finished';
+    //   return this.afDB.list(`orders/${this.restaurant.id}/${this.today}`).push(objToUpdate);
+    // });
+
+    return this.afDB.object(`guests/${this.today}/${this.restaurant.id}/${guest.user_id}`).update(objToUpdate)
   }
 
   filterGuestByUserId$(guest) {
