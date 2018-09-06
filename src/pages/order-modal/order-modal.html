@@ -129,9 +129,11 @@
           <ion-avatar item-start>
             <img src="{{dish.picture}}" />
           </ion-avatar>
-          <h2 ion-text color="dark" class="fw700">
+          <h2 ion-text color="dark" class="fw700" [ngClass]="{'item-canceled': dish.status === 'canceled'}">
             {{ dish.name }} x
             <span>{{ dish.quantity }}</span>
+            <br>
+            <small>{{(dish.price * dish.quantity) | currency:"R$"}}</small>
           </h2>
         </ion-item>
 
